@@ -49,7 +49,7 @@ const CardItem = () => {
         <div className="flex flex-col gap-1 items-end">
           <p className="text-3xl font-bold">$150</p>
           <p className="text-sm text-gray-500">Include taxes and fees</p>
-          <Link to='/reserve/roomId'>
+          <Link to='/detail/hotelId'>
             <button className="w-fit px-4 py-2 text-white font-medium bg-blue-900 rounded-md cursor-pointer">
               See availability
             </button>
