@@ -1,4 +1,5 @@
 import location from "../assets/location.png";
+import RoomTypes from "../components/RoomTypes";
 import { ROOM_IMAGES } from "../constants";
 
 const DetailsPage = () => {
@@ -30,8 +31,8 @@ const DetailsPage = () => {
         </div>
 
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mt-5">
-          {ROOM_IMAGES.map((image) => (
-            <img src={image} className="rounded-md w-full h-70" />
+          {ROOM_IMAGES.map((image, index) => (
+            <img src={image} className="rounded-md w-full h-70" key={index} />
           ))}
         </div>
 
@@ -69,12 +70,31 @@ const DetailsPage = () => {
               $200&nbsp;
               <span className="font-light">(2 Nights)</span>
             </p>
-            <button className="w-full bg-blue-900 p-2 rounded-md text-white font-bold text-md mt-5 cursor-pointer">
+            <button
+              className="w-full bg-blue-900 p-2 rounded-md text-white font-bold text-md mt-5 cursor-pointer"
+              onClick={() => document.getElementById("my_modal_3").showModal()}
+            >
               Reserve or Book now!
             </button>
           </div>
         </div>
       </div>
+
+      <dialog id="my_modal_3" className="modal">
+        <div className="modal-box w-full max-w-7xl">
+          <form method="dialog">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              ✕
+            </button>
+          </form>
+          <h1 className="text-2xl font-bold text-gray-900">
+            Please select room type
+          </h1>
+          <RoomTypes />
+          <RoomTypes />
+          <RoomTypes />
+        </div>
+      </dialog>
     </section>
   );
 };
