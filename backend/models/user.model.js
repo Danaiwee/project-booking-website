@@ -29,6 +29,11 @@ const userSchema = new mongoose.Schema({
         default: ''
     },
 
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
+
     bookingItems: [
         {
             bookingId : {
