@@ -80,7 +80,7 @@ const SearchBar = () => {
             </div>
 
             {showCalendar && (
-              <div className="absolute top-38 left-10 lg:top-13 lg:left-5 border-2 border-gray-200 w-fit">
+              <div className="absolute top-38 left-10 lg:top-13 lg:left-5 border-2 border-gray-200 w-fit z-50">
                 <DateRange
                   editableDateInputs={true}
                   onChange={handleDateChange} // Use the handleDateChange function
@@ -102,20 +102,22 @@ const SearchBar = () => {
               <p>2 Adult · 0 Children · 1 Room</p>
             </div>
             {personInput && (
-              <div className="absolute top-25 lg:top-13 lg:left-5 w-[320px] flex flex-col  border-2 border-gray-200 px-10 py-6 rounded-md gap-3 shadow-lg">
+              <div className="absolute top-25 lg:top-13 lg:left-5 w-[320px] flex flex-col  border-2 border-gray-200 px-10 py-6 rounded-md gap-3 shadow-lg z-50 bg-gray-100">
                  <div className="flex items-center justify-between">
                   <p>Adults</p>
                   <div className="flex items-center border-1 border-gray-500 rounded-md gap-3 p-2">
                     <button 
-                        className="hover:bg-blue-100 disabled:bg-white cursor-pointer rounded-md"
+                        className="hover:bg-blue-100 cursor-pointer rounded-md"
+                        type='button'
                         onClick={() => setSearchData((prev) => ({...prev, adult: prev.adult - 1}))}
                         disabled={searchData.adult === 0}
                     >
                       <Minus />
                     </button>
-                    <p>{searchData.adult}</p>
+                    <p className='w-3'>{searchData.adult}</p>
                     <button 
                         className="hover:bg-blue-100 cursor-pointer rounded-md"
+                        type='button'
                         onClick={() => setSearchData((prev) => ({...prev, adult: prev.adult + 1}))}
                     >
                       <Plus />
@@ -128,15 +130,17 @@ const SearchBar = () => {
                   <p>Childrens</p>
                   <div className="flex items-center border-1 border-gray-500 rounded-md gap-3 p-2">
                     <button 
-                        className="hover:bg-blue-100 disabled:bg-white cursor-pointer rounded-md"
+                        className="hover:bg-blue-100 cursor-pointer rounded-md"
+                        type='button'
                         onClick={() => setSearchData((prev) => ({...prev, children: prev.children - 1}))}
                         disabled={searchData.children === 0}
                     >
                       <Minus />
                     </button>
-                    <p>{searchData.children}</p>
+                    <p className='w-3'>{searchData.children}</p>
                     <button 
                         className="hover:bg-blue-100 cursor-pointer rounded-md"
+                        type='button'
                         onClick={() => setSearchData((prev) => ({...prev, children: prev.children + 1}))}
                     >
                       <Plus />
@@ -148,15 +152,17 @@ const SearchBar = () => {
                   <p>Room</p>
                   <div className="flex items-center border-1 border-gray-500 rounded-md gap-3 p-2">
                     <button 
-                        className="hover:bg-blue-100 disabled:bg-white cursor-pointer rounded-md"
+                        className="hover:bg-blue-100 cursor-pointer rounded-md"
+                        type='button'
                         onClick={() => setSearchData((prev) => ({...prev, room: prev.room - 1}))}
                         disabled={searchData.room === 0}
                     >
                       <Minus />
                     </button>
-                    <p>{searchData.room}</p>
+                    <p className='w-3'>{searchData.room}</p>
                     <button 
                         className="hover:bg-blue-100 cursor-pointer rounded-md"
+                        type='button'
                         onClick={() => setSearchData((prev) => ({...prev, room: prev.room + 1}))}
                     >
                       <Plus />
@@ -165,7 +171,7 @@ const SearchBar = () => {
                 </div>
 
                 <button 
-                    className="w-full py-2 rounded-md flex items-center justify-center bg-gray-100 hover:shadow-lg cursor-pointer"
+                    className="w-full py-2 rounded-md flex items-center justify-center bg-blue-900 hover:shadow-lg cursor-pointer text-white"
                     onClick={() => setPersonInput(false)}
                 >
                   Done

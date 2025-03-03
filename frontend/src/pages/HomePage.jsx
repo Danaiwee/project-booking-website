@@ -60,7 +60,7 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className='w-full bg-blue-900 mt-15'>
+      <div className='w-full bg-blue-900 mt-15 mx-auto'>
           <Subscribe />
       </div>
     </div>
