@@ -6,13 +6,12 @@ import userProfile from "../assets/user_profile.jpg";
 import { useUserStore } from "../store/useUserStore";
 
 const Navbar = () => {
-  const {user, logout} = useUserStore();
+  const { user, logout } = useUserStore();
 
-  const isLogin = true;
-  const isAdmin = false;
+  const isAdmin = user?.isAdmin || false;
 
   console.log("Navbar", user);
-  
+
   return (
     <nav className="w-full bg-blue-900 relative top-0">
       <div className="w-full max-w-7xl mx-auto flex items-center justify-between px-5 py-2 text-white">
@@ -21,25 +20,7 @@ const Navbar = () => {
         </Link>
 
         <div className="flex items-center gap-2">
-          {isLogin ? (
-            <>
-              <Link to="/profile">
-                <div className="w-fit rounded-full overflow-hidden">
-                  <img src={userProfile} alt="Profile" className="size-10" />
-                </div>
-              </Link>
-              <LogOutIcon 
-                className='size-5 text-gray-300 cursor-pointer'
-                onClick={() => logout()} 
-              />
-            </>
-          ) : (
-            <Link to="/login">
-              <button className="btn btn-soft text-sm sm:text-md">Login</button>
-            </Link>
-          )}
-
-          {isAdmin && (
+        {isAdmin && (
             <Link to="/admin">
               <div className="w-fit overflow-hidden">
                 <button className="btn  text-sm sm:text-md">
@@ -49,6 +30,26 @@ const Navbar = () => {
               </div>
             </Link>
           )}
+          {user && (
+            <>
+              <Link to="/profile">
+                <div className="w-fit rounded-full overflow-hidden">
+                  <img src={userProfile} alt="Profile" className="size-10" />
+                </div>
+              </Link>
+              <LogOutIcon
+                className="size-5 text-gray-300 cursor-pointer"
+                onClick={() => logout()}
+              />
+            </>
+          )}
+          {!user && (
+            <Link to="/login">
+              <button className="btn btn-soft text-sm sm:text-md">Login</button>
+            </Link>
+          )}
+
+          
         </div>
       </div>
     </nav>
