@@ -7,6 +7,7 @@ import {
   deleteHotel,
   getAllHotels,
   getCountByType,
+  getFeaturedHotels,
   getHotel,
   getHotelByCity,
   getHotelByType,
@@ -18,6 +19,7 @@ const router = express.Router();
 
 router.get("/getAll", getAllHotels);
 router.get("/count", getCountByType);
+router.get("/featured", getFeaturedHotels);
 router.get("/:id", getHotel);
 router.get("/search/:city", getHotelByCity);
 router.get("/type/:type", getHotelByType);

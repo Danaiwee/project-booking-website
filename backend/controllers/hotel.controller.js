@@ -79,6 +79,20 @@ export const getHotelRooms = async(req, res) => {
     };
 };
 
+export const getFeaturedHotels = async(req, res)=> {
+    try {
+        const hotels = await Hotel.find({featured: true});
+        if(!hotels){
+            return res.status(404).json({error: "Hotel not found"});
+        };
+
+        return res.status(200).json(hotels);
+    } catch (error) {
+        console.log("Error in getFeaturedHotels: ", error.message);
+        return res.status(500).json({error: "Internal server error"})
+    }
+};
+
 export const getCountByType = async(req, res) => {
     try {
         const hotelCount = await Hotel.countDocuments({type: "hotel"}) || 0;
