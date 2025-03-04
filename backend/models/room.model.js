@@ -17,16 +17,13 @@ const roomSchema = new mongoose.Schema({
     },
 
     bedType: {
-        amount: {
-            type: Number,
-            required: true
-        },
+        type: String,
+        required: true
+    },
 
-        type: {
-            type: String,
-            required: true,
-            enum: ["double bed", "single bed"]
-        }
+    bedAmount: {
+        type: Number,
+        required: true
     },
 
     maxPeople: {
@@ -35,15 +32,18 @@ const roomSchema = new mongoose.Schema({
     },
 
     hotel: {
-        hotelId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Hotel"
-        }
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Hotel"
     },
 
-    dateBooking: {
-        type: [Date]
-    }
+    images: {
+        type: [String],
+        default: []
+    },
+
+    dateBooking: [{
+        type: Date
+    }]
 
 }, {timestamps: true});
 
