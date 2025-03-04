@@ -1,5 +1,6 @@
-import React from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 import Navbar from "./components/Navbar";
 import HomePage from './pages/HomePage';
@@ -7,22 +8,32 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import DetailsPage from './pages/DetailsPage';
 import SearchPage from "./pages/SearchPage";
+import { useUserStore } from "./store/useUserStore";
 
 const App = () => {
   const location = useLocation();
-
   const isAuthPage = location.pathname === '/login' || location.pathname === '/signup';
+
+  const {checkAuth, user} = useUserStore();
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
+  console.log("App", user)
+
   return (
     <div className="w-full h-full">
       {!isAuthPage && <Navbar />}
 
       <Routes>
         <Route path='/' element={<HomePage />} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/signup' element={<SignupPage />} />
+        <Route path='/login' element={!user ? <LoginPage /> : <Navigate to='/' />} />
+        <Route path='/signup' element={!user ? <SignupPage /> : <Navigate to='/' />} />
         <Route path='/details/:id' element={<DetailsPage />} />
         <Route path='/search' element={<SearchPage />} />
       </Routes>
+      <Toaster />
     </div>
   );
 };

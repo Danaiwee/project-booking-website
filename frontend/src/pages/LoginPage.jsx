@@ -1,15 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import {motion} from 'framer-motion';
 
 import InputField from "../components/InputField";
+import { useUserStore } from "../store/useUserStore";
 
 const LoginPage = () => {
+  const {login, isLoading} = useUserStore();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+    setFormData({
+      email: "",
+      password: "",
+    })
+  }, [])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -20,12 +30,8 @@ const LoginPage = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    console.log(formData);
+    login(formData);
 
-    setFormData({
-      email: "",
-      password: "",
-    });
   };
   return (
     <motion.section 
