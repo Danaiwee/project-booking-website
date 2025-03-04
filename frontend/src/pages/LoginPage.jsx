@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import {motion} from 'framer-motion';
 
@@ -7,7 +7,11 @@ import InputField from "../components/InputField";
 import { useUserStore } from "../store/useUserStore";
 
 const LoginPage = () => {
-  const {login, isLoading} = useUserStore();
+  const {login, isLoading, user} = useUserStore();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const from = location.state?.from?.pathname || '/';
 
   const [formData, setFormData] = useState({
     email: "",
@@ -23,16 +27,21 @@ const LoginPage = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
+    await login(formData);
 
-    login(formData);
-
+    navigate(from, {replace: true});
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate(from, { replace: true });
+    }
+  }, [user, navigate, from]);
   return (
     <motion.section 
       className="w-full h-screen bg-[url(/travel-bg.jpg)] bg-cover bg-center overflow-hidden"

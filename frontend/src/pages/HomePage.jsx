@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { DESTINATIONS1, DESTINATIONS2, PROPERTY_TYPES } from "../constants";
 import Hero from "../components/Hero";
@@ -8,8 +8,25 @@ import Features from "../components/Features";
 import DetailsPage from "./DetailsPage";
 import Destination from "../components/Destination";
 import Subscribe from "../components/Subscribe";
+import { useHotelStore } from "../store/useHotelStore.js";
+import PropertyTypes from "../components/PropertyTypes.jsx";
 
 const HomePage = () => {
+  const [type, setType] = useState(null);
+  const [features, setFeatures] = useState(null);
+  const {getType, hotelType, hotels, getFeatured, isLoading} = useHotelStore();
+
+  useEffect(() => {
+    getType();
+    getFeatured();
+  }, [getType, getFeatured]);
+
+  useEffect(() => {
+    setType(hotelType);
+    setFeatures(hotels);
+
+  }, [hotelType, hotels]);
+
   return (
     <div className="flex flex-col relative mb-10">
       <Hero />
@@ -22,9 +39,7 @@ const HomePage = () => {
           </h1>
 
           <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3 mt-3">
-            {PROPERTY_TYPES.map((property) => (
-              <PropertyType key={property.id} property={property} />
-            ))}
+            {type && <PropertyTypes type={type} /> }
           </div>
         </div>
 
@@ -34,10 +49,9 @@ const HomePage = () => {
           </h1>
 
           <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mt-3">
-            <Features />
-            <Features />
-            <Features />
-            <Features />
+            {features && features.map((feature) => (
+              <Features key={feature._id} />
+            ))}
           </div>
         </div>
 

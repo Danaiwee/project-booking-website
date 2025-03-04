@@ -33,13 +33,13 @@ export const PROPERTY_TYPES = [
 ];
 
 export const DESTINATIONS1 = [
-    {id: 1, title: 'Bangkok', image: bangkok},
-    {id: 2, title: 'Chiang Mai', image: chiangmai},
+    {id: 1, title: 'Bangkok', image: bangkok, src: 'bangkok'},
+    {id: 2, title: 'Chiang Mai', image: chiangmai, src:'chiang mai'},
 ];
 export const DESTINATIONS2 = [
-    {id: 3, title: 'Pattaya', image: pattaya},
-    {id: 4, title: 'Phuket', image: phuket},
-    {id: 5, title: 'Samui', image: samui}
+    {id: 3, title: 'Pattaya', image: pattaya, src: 'pattaya'},
+    {id: 4, title: 'Phuket', image: phuket, src: 'phuket'},
+    {id: 5, title: 'Samui', image: samui, src: 'samui'}
 ];
 
 export const ROOM_IMAGES = [room1, room2, room3, room4, room5, room6, room7, room8, room9, room10, room11, room12];

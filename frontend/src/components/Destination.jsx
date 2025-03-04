@@ -6,7 +6,7 @@ const Destination = ({data}) => {
  
   return (
     <Link
-      to="/567"
+      to={`/search?city=${data?.src}`}
       className="w-full h-60 rounded-xl overflow-hidden"
       style={{
         backgroundImage: `url(${data?.image})`,

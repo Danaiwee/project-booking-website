@@ -10,8 +10,6 @@ const Navbar = () => {
 
   const isAdmin = user?.isAdmin || false;
 
-  console.log("Navbar", user);
-
   return (
     <nav className="w-full bg-blue-900 relative top-0">
       <div className="w-full max-w-7xl mx-auto flex items-center justify-between px-5 py-2 text-white">
@@ -34,7 +32,7 @@ const Navbar = () => {
             <>
               <Link to="/profile">
                 <div className="w-fit rounded-full overflow-hidden">
-                  <img src={userProfile} alt="Profile" className="size-10" />
+                  <img src={user?.profileImg} alt="Profile" className="size-10" />
                 </div>
               </Link>
               <LogOutIcon
