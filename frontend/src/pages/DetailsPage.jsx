@@ -1,19 +1,26 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import location from "../assets/location.png";
+
 import RoomTypes from "../components/RoomTypes";
-import { ROOM_IMAGES } from "../constants";
-import { useHotelStore } from "../store/useHotelStore";
+import { useHotelStore } from "../store/useHotelStore.js";
+import { useSearchStore } from "../store/useSearchStore.js";
+import { calculateDaysDifference } from "../utils/date.js";
 
 const DetailsPage = () => {
   const { id } = useParams();
-  const { getHotel, hotel, isLoading } = useHotelStore();
+  const { getHotelRooms, hotel, isLoading } = useHotelStore();
+  const { searchDetails } = useSearchStore();
+
+  const differentDay = calculateDaysDifference(
+    searchDetails?.dates.startDate,
+    searchDetails?.dates.endDate
+  );
 
   useEffect(() => {
-    getHotel(id);
-  }, [getHotel]);
+    getHotelRooms(id);
+  }, [getHotelRooms]);
 
-  console.log("Hotel detail", hotel); 
   return (
     <section className="w-full h-full my-10">
       <div className="w-full max-w-7xl mx-auto flex flex-col px-5">
@@ -55,8 +62,8 @@ const DetailsPage = () => {
           </div>
 
           <div className="flex-1 bg-blue-100 rounded-md px-4 py-4">
-            <h3 className="text-gray-700 font-bold text-xl">
-              Perfect for 2-nights stay!
+            <h3 className="text-gray-700 font-bold text-lg">
+              Perfect for {differentDay}-night(s) stay!
             </h3>
             <p className="text-sm text-gray-700 mt-5">
               Experience comfort and relaxation with modern amenities, stylish
@@ -65,8 +72,8 @@ const DetailsPage = () => {
               memorable stay.
             </p>
             <p className="text-2xl font-bold text-gray-900 mt-3">
-            ฿{(hotel?.minPrice*2).toLocaleString()}&nbsp;
-              <span className="font-light">(2 Nights)</span>
+              ฿{(hotel?.minPrice * differentDay).toLocaleString()}&nbsp;
+              <span className="font-light">({differentDay} Nights)</span>
             </p>
             <button
               className="w-full bg-blue-900 p-2 rounded-md text-white font-bold text-md mt-5 cursor-pointer"
@@ -88,9 +95,8 @@ const DetailsPage = () => {
           <h1 className="text-2xl font-bold text-gray-900">
             Please select room type
           </h1>
-          <RoomTypes />
-          <RoomTypes />
-          <RoomTypes />
+
+          {hotel && hotel?.rooms.map((room) => <RoomTypes key={room._id} room={room} />)}
         </div>
       </dialog>
     </section>

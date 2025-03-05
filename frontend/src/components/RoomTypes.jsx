@@ -1,7 +1,6 @@
 import { Check, User } from "lucide-react";
-import { PersonStanding } from "lucide-react";
 
-import room1 from "/room/room-7.jpg";
+
 import ruler from "../assets/ruler.png";
 import nonSmoking from "../assets/smoking.png";
 import bathtub from "../assets/bathtub.png";
@@ -10,18 +9,20 @@ import refrige from "../assets/refige.png";
 import air from "../assets/air.png";
 import bed from "../assets/bed.png";
 
-const RoomTypes = () => {
+const RoomTypes = ({room}) => {
+  const priceWithBreakfast = (room?.price ?? 0) + (room?.breakfast ?? 0);
+  const numberOfMaxPeople = Array.from({ length: room?.maxPeople ?? 0 });
   return (
     <div className="w-full border-1 border-gray-300 rounded-md shadow-md px-2 py-4 mt-3">
       <div className="w-full flex flex-col md:flex-row justify-between items-start gap-5">
         <div className="flex-1 max-w-[240px] flex flex-col">
-          <h1 className="text-xl font-bold text-gray-900">Deluxe</h1>
-          <img src={room1} className="w-full h-35 rounded-md" />
+          <h1 className="text-xl font-bold text-gray-900">{room?.title}</h1>
+          <img src={room?.images[0]} className="w-full h-35 rounded-md" />
 
           <div className="flex justify-between mt-3">
             <div className="flex-1 flex items-center gap-2">
               <img src={ruler} className="size-6" />
-              <span className="text-sm">28.8 sq.m</span>
+              <span className="text-sm">{room?.area.toFixed(2)} sq.m</span>
             </div>
             <div className="flex-1 flex items-center gap-2">
               <img src={nonSmoking} className="size-6" />
@@ -67,29 +68,30 @@ const RoomTypes = () => {
               <tbody>
                 <tr>
                   <td className="flex flex-col">
-                    <p className="text-xs text-gray-500">Premier Room</p>
+                    <p className="text-xs text-gray-500">{room?.title} Room</p>
                     <p className="text-md font-bold text-gray-900">
                       Without breakfast
                     </p>
                     <div className="flex gap-1 items-center">
                       <img src={bed} className="size-3" />
-                      <span className="text-sm">1 double bed</span>
+                      <span className="text-sm">{room?.bedAmount} {room?.bedType}</span>
                     </div>
 
                     <div className="flex gap-1 items-center">
                       <Check className="size-3" />
-                      <span className="text-sm font-bold">Non refunable</span>
+                      <span className="text-sm font-bold">Non refundable</span>
                     </div>
                   </td>
                   <td>
                     <div className="flex items-center gap-1">
-                      <User />
-                      <User />
+                      {numberOfMaxPeople && numberOfMaxPeople.map((_, index) => (
+                        <User key={index} />
+                      ))}
                     </div>
                   </td>
                   <td>
                     <div className='flex flex-col'>
-                      <h1 className='text-orange-600 text-xl font-bold'>$150</h1>
+                      <h1 className='text-orange-600 text-xl font-bold'>฿{room?.price.toLocaleString()}</h1>
                       <p className='text-md text-gray-500'>Exclude taxes & fees</p>
                     </div>
                   </td>
@@ -102,18 +104,18 @@ const RoomTypes = () => {
 
                 <tr>
                   <td className="flex flex-col">
-                    <p className="text-xs text-gray-500">Premier Room</p>
+                    <p className="text-xs text-gray-500">{room?.title} Room</p>
                     <p className="text-md font-bold text-gray-900">
                       With breakfast
                     </p>
                     <div className="flex gap-1 items-center">
                       <img src={bed} className="size-3" />
-                      <span className="text-sm">1 double bed</span>
+                      <span className="text-sm">{room?.bedAmount} {room?.bedType}</span>
                     </div>
 
                     <div className="flex gap-1 items-center">
                       <Check className="size-3" />
-                      <span className="text-sm font-bold">Non refunable</span>
+                      <span className="text-sm font-bold">Non refundable</span>
                     </div>
                   </td>
                   <td>
@@ -124,7 +126,7 @@ const RoomTypes = () => {
                   </td>
                   <td>
                     <div className='flex flex-col'>
-                      <h1 className='text-orange-600 text-xl font-bold'>$165</h1>
+                      <h1 className='text-orange-600 text-xl font-bold'>฿{priceWithBreakfast.toLocaleString()}</h1>
                       <p className='text-md text-gray-500'>Exclude taxes & fees</p>
                     </div>
                   </td>

@@ -87,4 +87,20 @@ export const useHotelStore = create((set, get) => ({
             set({isLoading: false});
         }
     },
+
+    getHotelRooms: async(hotelId) => {
+        set({isLoading: false})
+        try {
+            const res = await axios.get(`/hotels/rooms/${hotelId}`);
+            const data = await res.data;
+
+            set({hotel: data});
+        } catch (error) {
+            console.log("Error in getHotelRoom useHotelStore: ", error.message);
+            throw new Error(error.message);
+
+        } finally{
+            set({isLoading: false})
+        }
+    }
 }))
