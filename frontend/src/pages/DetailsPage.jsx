@@ -9,7 +9,7 @@ import { calculateDaysDifference } from "../utils/date.js";
 
 const DetailsPage = () => {
   const { id } = useParams();
-  const { getHotelRooms, hotel, isLoading } = useHotelStore();
+  const { getHotelRooms, hotel, room } = useHotelStore();
   const { searchDetails } = useSearchStore();
 
   const differentDay = calculateDaysDifference(
@@ -19,7 +19,9 @@ const DetailsPage = () => {
 
   useEffect(() => {
     getHotelRooms(id);
-  }, [getHotelRooms]);
+  }, [getHotelRooms, id]);
+
+  // console.log("Room", room)
 
   return (
     <section className="w-full h-full my-10">

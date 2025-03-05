@@ -20,14 +20,24 @@ export const calculateDaysDifference = (startDate, endDate) => {
   return differenceInDays;
 };
 
+export const generateSingleDate = (date) => {
+  // Ensure the input is a Date object
+  const currentDate = new Date(date);
+
+  // Return an array with a single date formatted as YYYY-MM-DD
+  return [currentDate.toISOString().split("T")[0]];
+};
+
 export const generateDateArray = (startDate, endDate) => {
-  const start = new Date(startDate);
+  // Ensure that startDate and endDate are Date objects
+  const start = new Date(startDate); 
   const end = new Date(endDate);
+  
   const dateArray = [];
 
   while (start <= end) {
-      dateArray.push(new Date(start).toISOString().split("T")[0]); // Push in YYYY-MM-DD format
-      start.setDate(start.getDate() + 1); // Move to next day
+    dateArray.push(new Date(start).toISOString().split("T")[0]); // Push in YYYY-MM-DD format
+    start.setDate(start.getDate() + 1); // Move to next day
   }
 
   return dateArray;

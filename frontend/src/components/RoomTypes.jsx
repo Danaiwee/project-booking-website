@@ -16,7 +16,7 @@ import { useHotelStore } from "../store/useHotelStore.js";
 
 const RoomTypes = ({ room }) => {
   const {setBookingType, setBookingRoom} = useHotelStore();
-  const [isAvailable, setIsAvailable] = useState();
+  const [isAvailable, setIsAvailable] = useState(true);
   const { searchDetails } = useSearchStore();
 
   const navigate = useNavigate();
@@ -27,24 +27,31 @@ const RoomTypes = ({ room }) => {
 
   useEffect(() => {
     if (searchDetails) {
-      const checkAvailable = () => {
-        const dateArray = generateDateArray(
-          searchDetails?.dates.startDate,
-          searchDetails?.dates.endDate
-        );
+      const checkAvailability = () => {
+        // Convert startDate and endDate to Date objects
+        const start = new Date(searchDetails.dates.startDate);
+        const end = new Date(searchDetails.dates.endDate);
 
+        // Generate date array between startDate and endDate (in YYYY-MM-DD format)
+        const dateArray = generateDateArray(start, end);
+
+        // Normalize the room's dateBooking to the same format (YYYY-MM-DD)
+        const normalizedRoomBooking = room?.dateBooking.map((date) => new Date(date).toISOString().split("T")[0]);
+
+        // Check if any of the generated dates match the normalized dateBooking array
         for (let date of dateArray) {
-          if (room?.dateBooking.includes(date)) {
-            return false;
+          if (normalizedRoomBooking.includes(date)) {
+            return false; // If a match is found, return false (not available)
           }
         }
 
-        return true;
+        return true; // If no match is found, return true (available)
       };
 
-      setIsAvailable(checkAvailable());
+      setIsAvailable(checkAvailability());
     }
-  }, []);
+  }, [searchDetails, room]); // Re-run when searchDetails or room changes
+
 
   const handleChoose = async (e,type) => {
     e.preventDefault();

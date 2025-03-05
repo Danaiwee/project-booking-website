@@ -92,8 +92,8 @@ const PurchasePage = () => {
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
   const dateArray = generateDateArray(
-    searchDetails?.dates.startDate,
-    searchDetails?.dates.endDate
+    searchDetails?.dates?.startDate,
+    searchDetails?.dates?.endDate
   );
   const startDate = formatDateRange(dateArray[0]);
   const endDate = formatDateRange(dateArray[dateArray.length - 1]);
@@ -101,10 +101,8 @@ const PurchasePage = () => {
 
   const guests = searchDetails?.adult + searchDetails?.children;
 
-  // console.log("breakfast: ", breakfast);
-  console.log("purchase Data", purchaseData);
-  // console.log("room Data", room);
-  // console.log("hotel Data: ", hotel);
+  console.log("Date Array: ", dateArray);
+  console.log("SearchDetails", searchDetails);
 
   return (
     <article className="w-full h-full bg-gray-100">

@@ -21,8 +21,17 @@ export const useSearchStore = create((set, get) => ({
   getSearchDetails: () => get().searchDetails,
 
   setSearchDetails: (searchDetails = defaultSearchDetails) => {
-    set({ searchDetails });
+    // Convert the startDate and endDate to ISO strings before saving
+    const updatedSearchDetails = {
+      ...searchDetails,
+      dates: {
+        startDate: searchDetails.dates.startDate.toISOString(),
+        endDate: searchDetails.dates.endDate.toISOString(),
+        key: searchDetails.dates.key,
+      },
+    };
 
-    localStorage.setItem("searchDetails-1", JSON.stringify(searchDetails));
+    set({ searchDetails: updatedSearchDetails });
+    localStorage.setItem("searchDetails-1", JSON.stringify(updatedSearchDetails));
   },
 }));
