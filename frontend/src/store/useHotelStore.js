@@ -6,6 +6,7 @@ export const useHotelStore = create((set, get) => ({
     hotelType: null,
     isLoading: false,
     hotels: null,
+    hotel: null,
 
     getType: async() => {
         set({isLoading: false});
@@ -64,6 +65,22 @@ export const useHotelStore = create((set, get) => ({
             set({hotels: data});
         } catch (error) {
             console.log("Error in getHotelBytype: ", error.message);
+            throw new Error(error.message);
+
+        } finally {
+            set({isLoading: false});
+        }
+    },
+
+    getHotel: async(id) => {
+        set({isLoading: true});
+        try {
+            const res = await axios.get(`/hotels/${id}`);
+            const data = await res.data;
+
+            set({hotel: data});
+        } catch (error) {
+            console.log("Error in getHotel useHotelStore: ", error.message);
             throw new Error(error.message);
 
         } finally {

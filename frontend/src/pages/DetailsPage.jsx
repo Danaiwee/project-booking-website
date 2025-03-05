@@ -1,16 +1,25 @@
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import location from "../assets/location.png";
 import RoomTypes from "../components/RoomTypes";
 import { ROOM_IMAGES } from "../constants";
+import { useHotelStore } from "../store/useHotelStore";
 
 const DetailsPage = () => {
+  const { id } = useParams();
+  const { getHotel, hotel, isLoading } = useHotelStore();
+
+  useEffect(() => {
+    getHotel(id);
+  }, [getHotel]);
+
+  console.log("Hotel detail", hotel); 
   return (
     <section className="w-full h-full my-10">
       <div className="w-full max-w-7xl mx-auto flex flex-col px-5">
         <div className="flex flex-col gap-3 md:flex-row md:gap-0 justify-between">
           <div className="flex flex-col">
-            <h1 className="text-3xl font-bold text-gray-900">
-              Austin David Hotel
-            </h1>
+            <h1 className="text-3xl font-bold text-gray-900">{hotel?.title}</h1>
             <div className="flex items-center gap-3 mt-1">
               <img src={location} className="size-4" />
               <p className="text-sm text-gray-900">
@@ -18,7 +27,7 @@ const DetailsPage = () => {
               </p>
             </div>
             <p className="text-blue-900 text-md mt-2 font-medium">
-              Excellent location - 700m from center
+              Excellent location - {hotel?.distance}
             </p>
             <p className="text-green-700 text-lg mt-1 font-medium">
               Book a stay over $150 at this property and get free airport taxi
@@ -31,9 +40,10 @@ const DetailsPage = () => {
         </div>
 
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mt-5">
-          {ROOM_IMAGES.map((image, index) => (
-            <img src={image} className="rounded-md w-full h-70" key={index} />
-          ))}
+          {hotel &&
+            hotel?.images.map((image, index) => (
+              <img src={image} className="rounded-md w-full h-70" key={index} />
+            ))}
         </div>
 
         <div className="w-full flex flex-col gap-3 md:flex-row md:justify-between md:gap-5 mt-12">
@@ -41,20 +51,7 @@ const DetailsPage = () => {
             <h1 className="text-3xl font-bold text-gray-900">
               Experience World-class Service
             </h1>
-            <p className="text-sm text-gray-900 mt-5">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quaerat
-              pariatur recusandae doloremque illo doloribus voluptatum, ad
-              earum, labore eius at aperiam, in nemo voluptatem eaque veritatis
-              sequi consequuntur illum id soluta. Iusto molestias sunt odit
-              omnis officiis voluptates cupiditate similique, deleniti
-              temporibus impedit nam, repudiandae eum dolor harum! Maxime iusto
-              vero, perferendis maiores repudiandae unde veniam perspiciatis
-              fugiat harum cupiditate ducimus dolor beatae, amet tenetur
-              veritatis vitae cumque provident error aliquid eaque quasi illum
-              molestias dolores. Animi ipsa laborum, perspiciatis ea a explicabo
-              dolorem iste temporibus facere illum, deserunt tempora quo
-              corporis officia recusandae sed optio iusto porro beatae. Error?
-            </p>
+            <p className="text-sm text-gray-900 mt-5">{hotel?.description}</p>
           </div>
 
           <div className="flex-1 bg-blue-100 rounded-md px-4 py-4">
@@ -62,12 +59,13 @@ const DetailsPage = () => {
               Perfect for 2-nights stay!
             </h3>
             <p className="text-sm text-gray-700 mt-5">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam
-              excepturi molestiae quos dolorem veritatis assumenda quod tempore
-              natus doloremque et.
+              Experience comfort and relaxation with modern amenities, stylish
+              rooms, and a prime location near top attractions. Whether you're
+              here for business or leisure, enjoy exceptional service and a
+              memorable stay.
             </p>
             <p className="text-2xl font-bold text-gray-900 mt-3">
-              $200&nbsp;
+            ฿{(hotel?.minPrice*2).toLocaleString()}&nbsp;
               <span className="font-light">(2 Nights)</span>
             </p>
             <button
