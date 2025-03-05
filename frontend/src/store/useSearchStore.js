@@ -10,8 +10,8 @@ const defaultSearchDetails = {
   adult: 2,
   children: 0,
   room: 1,
-  minPrice: null,
-  maxPrice: null,
+  minPrice: '',
+  maxPrice: '',
 };
 
 export const useSearchStore = create((set, get) => ({

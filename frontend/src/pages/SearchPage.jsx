@@ -35,10 +35,10 @@ const SearchPage = () => {
       const filterData = () => {
         return hotels.filter((hotel) =>  {
           if(searchDetails.minPrice && searchDetails.maxPrice){
-            return hotel.minPrice > searchDetails.minPrice && hotel.minPrice < searchDetails.maxPrice
+            return hotel.minPrice >= searchDetails.minPrice && hotel.minPrice <= searchDetails.maxPrice
 
           } else if(searchDetails.minPrice) {
-            return hotel.minPrice > searchDetails.minPrice
+            return hotel.minPrice >= searchDetails.minPrice
 
           } else {
             return hotel
@@ -47,10 +47,7 @@ const SearchPage = () => {
       }
 
       const filtered = filterData();
-      setFilteredHotel(filtered);
-      console.log("hey I'm running", filteredHotel);
-      console.log("here is my search Data: ", searchDetails);
-      
+      setFilteredHotel(filtered); 
     } else {
       setFilteredHotel(hotels);
     }

@@ -26,8 +26,8 @@ const Filter = () => {
     adult: searchDetails?.adult || 2,
     children: searchDetails?.children || 0,
     room: searchDetails?.room || 1,
-    minPrice: searchDetails?.minPrice || null,
-    maxPrice: searchDetails?.maxPrice || null,
+    minPrice: searchDetails?.minPrice || '',
+    maxPrice: searchDetails?.maxPrice || '',
   });
   const [showCalendar, setShowCalendar] = useState(false);
 
@@ -51,8 +51,8 @@ const Filter = () => {
       adult: searchDetails?.adult || 2,
       children: searchDetails?.children || 0,
       room: searchDetails?.room || 1,
-      minPrice: searchDetails?.minPrice || null,
-      maxPrice: searchDetails?.maxPrice || null,
+      minPrice: searchDetails?.minPrice || '',
+      maxPrice: searchDetails?.maxPrice || '',
     });
   }, [searchDetails]);
 
@@ -69,7 +69,7 @@ const Filter = () => {
 
     setSearchData((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: value === "" ? 0 : Number(value),
     }));
   };
 
