@@ -19,3 +19,34 @@ export const calculateDaysDifference = (startDate, endDate) => {
 
   return differenceInDays;
 };
+
+export const generateDateArray = (startDate, endDate) => {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  const dateArray = [];
+
+  while (start <= end) {
+      dateArray.push(new Date(start).toISOString().split("T")[0]); // Push in YYYY-MM-DD format
+      start.setDate(start.getDate() + 1); // Move to next day
+  }
+
+  return dateArray;
+};
+
+export const formatDateRange = (date) => {
+  const options = { weekday: "short", day: "numeric", month: "short", year: "numeric" };
+
+  const formattedDate = new Date(date).toLocaleDateString("en-US", options);
+
+  return formattedDate;
+};
+
+export const cancelDate = (date) => {
+  const options = { weekday: "short", day: "numeric", month: "short", year: "numeric" };
+
+  const formattedDate = new Date(date);
+  formattedDate.setDate(formattedDate.getDate() - 1);
+
+
+  return formattedDate.toLocaleDateString("en-US", options);
+};

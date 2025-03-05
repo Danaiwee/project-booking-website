@@ -2,11 +2,13 @@ import {create} from 'zustand';
 
 import axios from '../libs/axios.js';
 
-export const useHotelStore = create((set, get) => ({
+export const useHotelStore = create((set) => ({
     hotelType: null,
     isLoading: false,
     hotels: null,
-    hotel: null,
+    hotel: JSON.parse(localStorage.getItem('hotel')) || null,
+    breakfast: JSON.parse(localStorage.getItem("breakfast")) || false,
+    room: JSON.parse(localStorage.getItem("room")) || null,
 
     getType: async() => {
         set({isLoading: false});
@@ -95,6 +97,7 @@ export const useHotelStore = create((set, get) => ({
             const data = await res.data;
 
             set({hotel: data});
+            localStorage.setItem("hotel", JSON.stringify(data));
         } catch (error) {
             console.log("Error in getHotelRoom useHotelStore: ", error.message);
             throw new Error(error.message);
@@ -102,5 +105,30 @@ export const useHotelStore = create((set, get) => ({
         } finally{
             set({isLoading: false})
         }
-    }
+    },
+
+    setBookingType: (type) => {
+        try {
+            set({breakfast: type});
+            localStorage.setItem("breakfast", JSON.stringify(type));
+        } catch (error) {
+            console.log("Erro in setBookingType: ", error.message);
+            throw new Error(error.message);
+        }
+    },
+
+     setBookingRoom: async (roomId) => {
+        set({isLoading: true});
+        try {
+            const res = await axios.get(`/rooms/${roomId}`);
+            const data = res.data;
+
+            set({room: data});
+            localStorage.setItem("room", JSON.stringify(data));
+        } catch (error) {
+            console.log("Error in setBookingRoom: ", error.message);
+            throw new Error(error.message);
+        }
+     }
+
 }))

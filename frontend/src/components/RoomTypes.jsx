@@ -1,6 +1,5 @@
 import { Check, User } from "lucide-react";
 
-
 import ruler from "../assets/ruler.png";
 import nonSmoking from "../assets/smoking.png";
 import bathtub from "../assets/bathtub.png";
@@ -9,9 +8,53 @@ import refrige from "../assets/refige.png";
 import air from "../assets/air.png";
 import bed from "../assets/bed.png";
 
-const RoomTypes = ({room}) => {
+import { useSearchStore } from "../store/useSearchStore.js";
+import { useEffect, useState } from "react";
+import { generateDateArray } from "../utils/date.js";
+import { useNavigate } from "react-router-dom";
+import { useHotelStore } from "../store/useHotelStore.js";
+
+const RoomTypes = ({ room }) => {
+  const {setBookingType, setBookingRoom} = useHotelStore();
+  const [isAvailable, setIsAvailable] = useState();
+  const { searchDetails } = useSearchStore();
+
+  const navigate = useNavigate();
+
   const priceWithBreakfast = (room?.price ?? 0) + (room?.breakfast ?? 0);
   const numberOfMaxPeople = Array.from({ length: room?.maxPeople ?? 0 });
+
+
+  useEffect(() => {
+    if (searchDetails) {
+      const checkAvailable = () => {
+        const dateArray = generateDateArray(
+          searchDetails?.dates.startDate,
+          searchDetails?.dates.endDate
+        );
+
+        for (let date of dateArray) {
+          if (room?.dateBooking.includes(date)) {
+            return false;
+          }
+        }
+
+        return true;
+      };
+
+      setIsAvailable(checkAvailable());
+    }
+  }, []);
+
+  const handleChoose = async (e,type) => {
+    e.preventDefault();
+
+    await setBookingType(type);
+    await setBookingRoom(room?._id);
+    
+    navigate(`/purchase/${room?._id}`);
+  };
+
   return (
     <div className="w-full border-1 border-gray-300 rounded-md shadow-md px-2 py-4 mt-3">
       <div className="w-full flex flex-col md:flex-row justify-between items-start gap-5">
@@ -74,7 +117,9 @@ const RoomTypes = ({room}) => {
                     </p>
                     <div className="flex gap-1 items-center">
                       <img src={bed} className="size-3" />
-                      <span className="text-sm">{room?.bedAmount} {room?.bedType}</span>
+                      <span className="text-sm">
+                        {room?.bedAmount} {room?.bedType}
+                      </span>
                     </div>
 
                     <div className="flex gap-1 items-center">
@@ -84,21 +129,35 @@ const RoomTypes = ({room}) => {
                   </td>
                   <td>
                     <div className="flex items-center gap-1">
-                      {numberOfMaxPeople && numberOfMaxPeople.map((_, index) => (
-                        <User key={index} />
-                      ))}
+                      {numberOfMaxPeople &&
+                        numberOfMaxPeople.map((_, index) => (
+                          <User key={index} />
+                        ))}
                     </div>
                   </td>
                   <td>
-                    <div className='flex flex-col'>
-                      <h1 className='text-orange-600 text-xl font-bold'>฿{room?.price.toLocaleString()}</h1>
-                      <p className='text-md text-gray-500'>Exclude taxes & fees</p>
+                    <div className="flex flex-col">
+                      <h1 className="text-orange-600 text-xl font-bold">
+                        ฿{room?.price.toLocaleString()}
+                      </h1>
+                      <p className="text-md text-gray-500">
+                        Exclude taxes & fees
+                      </p>
                     </div>
                   </td>
                   <td>
-                    <button className='bg-blue-900 p-2 rounded-md text-white font-bold active:scale-95 cursor-pointer'>
+                    <button
+                      className="bg-blue-900 p-2 rounded-md text-white font-bold active:scale-95 cursor-pointer disabled:bg-gray-300 disabled:active:scale-none"
+                      disabled={!isAvailable}
+                      onClick={(e) => handleChoose(e, false)}
+                    >
                       Choose
-                    </button> 
+                    </button>
+                    {isAvailable && (
+                      <p className="text-xs text-red-500 font-medium mt-1">
+                        1 room left!!!
+                      </p>
+                    )}
                   </td>
                 </tr>
 
@@ -110,7 +169,9 @@ const RoomTypes = ({room}) => {
                     </p>
                     <div className="flex gap-1 items-center">
                       <img src={bed} className="size-3" />
-                      <span className="text-sm">{room?.bedAmount} {room?.bedType}</span>
+                      <span className="text-sm">
+                        {room?.bedAmount} {room?.bedType}
+                      </span>
                     </div>
 
                     <div className="flex gap-1 items-center">
@@ -120,20 +181,35 @@ const RoomTypes = ({room}) => {
                   </td>
                   <td>
                     <div className="flex items-center gap-1">
-                      <User />
-                      <User />
+                      {numberOfMaxPeople &&
+                        numberOfMaxPeople.map((_, index) => (
+                          <User key={index} />
+                        ))}
                     </div>
                   </td>
                   <td>
-                    <div className='flex flex-col'>
-                      <h1 className='text-orange-600 text-xl font-bold'>฿{priceWithBreakfast.toLocaleString()}</h1>
-                      <p className='text-md text-gray-500'>Exclude taxes & fees</p>
+                    <div className="flex flex-col">
+                      <h1 className="text-orange-600 text-xl font-bold">
+                        ฿{priceWithBreakfast.toLocaleString()}
+                      </h1>
+                      <p className="text-md text-gray-500">
+                        Exclude taxes & fees
+                      </p>
                     </div>
                   </td>
                   <td>
-                    <button className='bg-blue-900 p-2 rounded-md text-white font-bold active:scale-95 cursor-pointer'>
+                    <button
+                      className="bg-blue-900 p-2 rounded-md text-white font-bold active:scale-95 cursor-pointer disabled:bg-gray-300 disabled:active:scale-none"
+                      disabled={!isAvailable}
+                      onClick={(e) => handleChoose(e, true)}
+                    >
                       Choose
-                    </button> 
+                    </button>
+                    {isAvailable && (
+                      <p className="text-xs text-red-500 font-medium mt-1">
+                        1 room left!!!
+                      </p>
+                    )}
                   </td>
                 </tr>
               </tbody>

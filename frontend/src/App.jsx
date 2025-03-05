@@ -10,6 +10,7 @@ import DetailsPage from './pages/DetailsPage';
 import SearchPage from "./pages/SearchPage";
 import { useUserStore } from "./store/useUserStore";
 import PurchasePage from "./pages/PurchasePage";
+import SuccessPage from "./pages/SuccessPage";
 
 const App = () => {
   const location = useLocation();
@@ -32,6 +33,7 @@ const App = () => {
         <Route path='/details/:id' element={user ? <DetailsPage /> : <Navigate to='/login' state={{from: location}} />}  />
         <Route path='/search' element={<SearchPage />} />
         <Route path='/purchase/:id' element={user ? <PurchasePage /> : <Navigate to='/login' />} />
+        <Route path='/purchase/success' element={user ? <SuccessPage /> : <Navigate to='/login' />} />
       </Routes>
       <Toaster />
     </div>
