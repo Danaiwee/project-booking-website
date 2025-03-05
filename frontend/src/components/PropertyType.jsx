@@ -11,7 +11,7 @@ const PropertyType = ({ property }) => {
   const handleClick = async (e) => {
     e.preventDefault();
 
-    await setSearchDetails(null);
+    await setSearchDetails();
 
     navigate(`/search?type=${src}`);
   };

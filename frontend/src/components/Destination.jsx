@@ -11,13 +11,13 @@ const Destination = ({data}) => {
   const handleClick = async (e) => {
     e.preventDefault();
 
-    await setSearchDetails(null);
+    await setSearchDetails();
 
     navigate(`/search?city=${data?.src}`);
   };
   return (
     <div
-      className="w-full h-60 rounded-xl overflow-hidden"
+      className="w-full h-60 rounded-xl overflow-hidden cursor-pointer"
       style={{
         backgroundImage: `url(${data?.image})`,
         backgroundSize: "cover",
