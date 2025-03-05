@@ -9,6 +9,7 @@ import SignupPage from './pages/SignupPage';
 import DetailsPage from './pages/DetailsPage';
 import SearchPage from "./pages/SearchPage";
 import { useUserStore } from "./store/useUserStore";
+import PurchasePage from "./pages/PurchasePage";
 
 const App = () => {
   const location = useLocation();
@@ -30,6 +31,7 @@ const App = () => {
         <Route path='/signup' element={!user ? <SignupPage /> : <Navigate to='/' />} />
         <Route path='/details/:id' element={user ? <DetailsPage /> : <Navigate to='/login' state={{from: location}} />}  />
         <Route path='/search' element={<SearchPage />} />
+        <Route path='/purchase/:id' element={user ? <PurchasePage /> : <Navigate to='/login' />} />
       </Routes>
       <Toaster />
     </div>
