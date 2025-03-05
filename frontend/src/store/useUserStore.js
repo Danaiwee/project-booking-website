@@ -3,7 +3,7 @@ import axios from '../libs/axios.js';
 import toast from 'react-hot-toast';
 
 export const useUserStore = create((set, get) => ({
-    user: null,
+    user: JSON.parse(localStorage.getItem('user')) || null,
     isLoading: false,
     isCheckingAuth: false,
 
@@ -28,6 +28,7 @@ export const useUserStore = create((set, get) => ({
             const data = await res.data;
 
             set({user: data});
+            localStorage.setItem('user', JSON.stringify(data));
             toast.success(`Welcome ${data.name}`);
         } catch (error) {
             console.log("Error in signup useUserStore: ", error.message);
@@ -50,6 +51,7 @@ export const useUserStore = create((set, get) => ({
             const data = await res.data;
 
             set({user: data});
+            localStorage.setItem('user', JSON.stringify(data));
             toast.success(`Welcome ${data.name}`)
 
         } catch (error) {
@@ -68,7 +70,8 @@ export const useUserStore = create((set, get) => ({
             await axios.post("/auth/logout");
             toast.success("Logged out successfully");
 
-            set({user: null})
+            set({user: null});
+            localStorage.removeItem('user');
         } catch (error) {
             console.log("Error in logout useUserStore: ", error.message);
             throw new Error(error.message);
@@ -82,6 +85,7 @@ export const useUserStore = create((set, get) => ({
         try {
             const res = await axios.get("/auth/getme");
             set({user: res.data, isCheckingAuth: false});
+            localStorage.setItem('user', JSON.stringify(res.data));
         } catch (error) {
             console.log("Error in checkAuth: ", error.message);
             throw new Error(error.message);
