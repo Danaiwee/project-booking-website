@@ -17,13 +17,13 @@ const SearchPage = () => {
   const [filteredHotel, setFilteredHotel] = useState(null);
 
   useEffect(() => {
-    const fetchHotel = (type, city) => {
+    const fetchHotel = async (type, city) => {
       if(type){
-        getHotelByType(type)
+       await getHotelByType(type)
       };
 
       if(city){
-        getHotelByCity(city);
+       await getHotelByCity(city);
       };
     }
     
@@ -56,8 +56,6 @@ const SearchPage = () => {
     }
   }, [hotels, searchDetails]); // This will update filteredHotel whenever hotels change
 
-
-  console.log(hotels);
   return (
     <section className='w-full h-full mt-5'>
         <div className='w-full max-w-7xl mx-auto flex flex-col sm:flex-row gap-2'>

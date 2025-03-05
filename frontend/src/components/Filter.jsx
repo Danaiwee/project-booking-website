@@ -3,13 +3,16 @@ import { DateRange } from "react-date-range";
 
 import { formatDate } from "../utils/date.js";
 import { useSearchStore } from "../store/useSearchStore.js";
-import { useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useHotelStore } from "../store/useHotelStore.js";
 
 const Filter = () => {
-  const { getSearchDetails, searchDetails, setSearchDetails } =
-    useSearchStore();
-  const { getHotelByCity } = useHotelStore();
+  const [searchParams ] = useSearchParams();
+  const type = searchParams.get("type");
+  const city = searchParams.get("city");
+
+  const { getSearchDetails, searchDetails, setSearchDetails } = useSearchStore();
+  const { getHotelByCity, getHotelByType } = useHotelStore();
 
   const [searchData, setSearchData] = useState({
     place: searchDetails?.place || "",
@@ -30,8 +33,6 @@ const Filter = () => {
 
   const startDate = formatDate(searchData.dates.startDate);
   const endDate = formatDate(searchData.dates.endDate);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     getSearchDetails();
@@ -76,9 +77,12 @@ const Filter = () => {
     e.preventDefault();
 
     await setSearchDetails(searchData);
-    await getHotelByCity(searchData.place);
-
-    navigate(`/search?city=${searchData?.place}`);
+    
+    if(type){
+      await getHotelByType(type);
+    } else {
+      await getHotelByCity(city);
+    }
   };
   return (
     <div className="w-full bg-amber-500 px-4 py-6 rounded-lg flex flex-col">
