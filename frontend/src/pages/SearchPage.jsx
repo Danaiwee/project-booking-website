@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Filter from '../components/Filter'
 import CardItem from '../components/CardItem'
 import { useHotelStore } from '../store/useHotelStore'
@@ -14,6 +14,8 @@ const SearchPage = () => {
   const {getHotelByCity, getHotelByType, hotels} = useHotelStore();
   const {searchDetails} = useSearchStore();
 
+  const [filteredHotel, setFilteredHotel] = useState(null);
+
   useEffect(() => {
     const fetchHotel = (type, city) => {
       if(type){
@@ -25,8 +27,34 @@ const SearchPage = () => {
       };
     }
     
-    fetchHotel(type, city)
+    fetchHotel(type, city);
   },[type, city]);
+
+  useEffect(() => {
+    if (hotels && searchDetails) {
+      const filterData = () => {
+        return hotels.filter((hotel) =>  {
+          if(searchDetails.minPrice && searchDetails.maxPrice){
+            return hotel.minPrice > searchDetails.minPrice && hotel.minPrice < searchDetails.maxPrice
+
+          } else if(searchDetails.minPrice) {
+            return hotel.minPrice > searchDetails.minPrice
+
+          } else {
+            return hotel
+          }
+        })
+      }
+
+      const filtered = filterData();
+      setFilteredHotel(filtered);
+      console.log("hey I'm running", filteredHotel);
+      console.log("here is my search Data: ", searchDetails);
+      
+    } else {
+      setFilteredHotel(hotels);
+    }
+  }, [hotels, searchDetails]); // This will update filteredHotel whenever hotels change
 
 
   console.log(hotels);
@@ -34,11 +62,11 @@ const SearchPage = () => {
     <section className='w-full h-full mt-5'>
         <div className='w-full max-w-7xl mx-auto flex flex-col sm:flex-row gap-2'>
             <div className='flex-1'>
-                <Filter searchDetails={searchDetails} />
+                <Filter />
             </div>
 
             <div className='flex-3 flex flex-col gap-2'>
-                {hotels && hotels.map((hotel) => (
+                {filteredHotel && filteredHotel.map((hotel) => (
                   <CardItem 
                     key={hotel._id}
                     hotel={hotel}

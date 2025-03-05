@@ -1,37 +1,58 @@
 import { useEffect, useState } from "react";
 import { DateRange } from "react-date-range";
 
-import {formatDate} from '../utils/date.js';
+import { formatDate } from "../utils/date.js";
+import { useSearchStore } from "../store/useSearchStore.js";
+import { useNavigate } from "react-router-dom";
+import { useHotelStore } from "../store/useHotelStore.js";
 
-const Filter = ({ searchDetails }) => {
+const Filter = () => {
+  const { getSearchDetails, searchDetails, setSearchDetails } =
+    useSearchStore();
+  const { getHotelByCity } = useHotelStore();
+
   const [searchData, setSearchData] = useState({
     place: searchDetails?.place || "",
     dates: {
       startDate: searchDetails?.dates.startDate || new Date(),
-      endDate: searchDetails?.dates.endDate || null,
+      endDate:
+        searchDetails?.dates.endDate ||
+        new Date(new Date().setDate(new Date().getDate() + 1)),
       key: "selection",
     },
     adult: searchDetails?.adult || 2,
     children: searchDetails?.children || 0,
     room: searchDetails?.room || 1,
+    minPrice: searchDetails?.minPrice || null,
+    maxPrice: searchDetails?.maxPrice || null,
   });
   const [showCalendar, setShowCalendar] = useState(false);
 
   const startDate = formatDate(searchData.dates.startDate);
   const endDate = formatDate(searchData.dates.endDate);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-      setSearchData({
-        place: searchDetails?.place || "",
-        dates: {
-          startDate: searchDetails?.dates.startDate || new Date(),
-          endDate: searchDetails?.dates.endDate || null,
-          key: "selection",
-        },
-        adult: searchDetails?.adult || 2,
-        children: searchDetails?.children || 0,
-        room: searchDetails?.room || 1,
-      });
+    getSearchDetails();
+  }, []);
+
+  useEffect(() => {
+    setSearchData({
+      place: searchDetails?.place || "",
+      dates: {
+        startDate: searchDetails?.dates.startDate || new Date(),
+        endDate:
+          searchDetails?.dates.endDate ||
+          new Date(new Date().setDate(new Date().getDate() + 1)),
+        key: "selection",
+      },
+      adult: searchDetails?.adult || 2,
+      children: searchDetails?.children || 0,
+      room: searchDetails?.room || 1,
+      minPrice: searchDetails?.minPrice || null,
+      maxPrice: searchDetails?.maxPrice || null,
+    });
   }, [searchDetails]);
 
   const handleDateChange = (item) => {
@@ -45,8 +66,20 @@ const Filter = ({ searchDetails }) => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    setSearchData({ ...searchData, [name]: value });
-  }
+    setSearchData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+
+    await setSearchDetails(searchData);
+    await getHotelByCity(searchData.place);
+
+    navigate(`/search?city=${searchData?.place}`);
+  };
   return (
     <div className="w-full bg-amber-500 px-4 py-6 rounded-lg flex flex-col">
       <h1 className="text-gray-900 font-bold text-2xl">Search</h1>
@@ -62,11 +95,10 @@ const Filter = ({ searchDetails }) => {
           <input
             className="w-full bg-white rounded-sm h-8 px-2 text-sm"
             type="text"
+            name="place"
             placeholder="Bangkok, pattaya..."
             value={searchData.place}
-            onChange={(e) =>
-              setSearchData({ ...searchData, place: e.target.value })
-            }
+            onChange={handleInputChange}
           />
         </div>
 
@@ -98,6 +130,7 @@ const Filter = ({ searchDetails }) => {
             <input
               className="w-12 bg-white rounded-md text-center text-sm py-1"
               type="number"
+              name="minPrice"
               min="0"
               value={searchData.minPrice}
               onChange={handleInputChange}
@@ -110,6 +143,7 @@ const Filter = ({ searchDetails }) => {
               className="w-12 bg-white rounded-md text-center text-sm py-1"
               type="number"
               min="0"
+              name="maxPrice"
               value={searchData.maxPrice}
               onChange={handleInputChange}
             />
@@ -121,6 +155,7 @@ const Filter = ({ searchDetails }) => {
               className="w-12 bg-white rounded-md text-center text-sm py-1"
               type="number"
               min="1"
+              name="adult"
               value={searchData.adult}
               onChange={handleInputChange}
             />
@@ -132,6 +167,7 @@ const Filter = ({ searchDetails }) => {
               className="w-12 bg-white rounded-md text-center text-sm py-1"
               type="number"
               min="0"
+              name="children"
               value={searchData.children}
               onChange={handleInputChange}
             />
@@ -143,13 +179,17 @@ const Filter = ({ searchDetails }) => {
               className="w-12 bg-white rounded-md text-center text-sm py-1"
               type="number"
               min="1"
+              name="room"
               value={searchData.room}
               onChange={handleInputChange}
             />
           </div>
         </div>
 
-        <button className="w-full py-2 rounded-md bg-blue-500 active:scale-95 text-md font-bold text-white mt-5 cursor-pointer">
+        <button
+          className="w-full py-2 rounded-md bg-blue-500 active:scale-95 text-md font-bold text-white mt-5 cursor-pointer"
+          onClick={handleSearch}
+        >
           Search
         </button>
       </form>

@@ -26,6 +26,8 @@ const SearchBar = () => {
     adult: 2,
     children: 0,
     room: 1,
+    minPrice: null,
+    maxPrice: null
   });
 
   const { searchDetails, setSearchDetails } = useSearchStore();
