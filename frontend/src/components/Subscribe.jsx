@@ -1,4 +1,5 @@
 import { Mail } from "lucide-react";
+import {Link} from 'react-router-dom';
 
 const Subscribe = () => {
   return (
@@ -11,18 +12,10 @@ const Subscribe = () => {
           Signup and we'll send you the best deal
         </p>
 
-        <div className="join mt-5">
-          <div>
-            <label className="input validator join-item">
-              <Mail className='size-8 text-gray-500' />
-              <input type="email" placeholder="youremail@email.com" required className='p-2 text-md ' />
-            </label>
-            <div className="validator-hint hidden">
-              Enter valid email address
-            </div>
-          </div>
-          <button className="btn btn-soft join-item text-md">Join</button>
-        </div>
+        <Link className="bg-gray-200 flex items-center gap-2 rounded-md mt-5 px-4 py-2 cursor-pointer active:scale-95">
+          <Mail className="size-8 text-gray-500" />
+          <p>Signup</p>
+        </Link>
       </div>
     </div>
   );

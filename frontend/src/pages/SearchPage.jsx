@@ -3,6 +3,7 @@ import {motion} from 'framer-motion';
 
 import Filter from '../components/Filter'
 import CardItem from '../components/CardItem'
+import hotelImg from '../assets/hotel.png';
 import { useHotelStore } from '../store/useHotelStore'
 import { useSearchParams } from 'react-router-dom'
 import { useSearchStore } from '../store/useSearchStore'
@@ -13,7 +14,7 @@ const SearchPage = () => {
   const type = searchParams.get("type");
   const city = searchParams.get("city");
 
-  const {getHotelByCity, getHotelByType, hotels} = useHotelStore();
+  const {getHotelByCity, getHotelByType, hotels, isLoading} = useHotelStore();
   const {searchDetails} = useSearchStore();
 
   const [filteredHotel, setFilteredHotel] = useState(null);
@@ -72,13 +73,20 @@ const SearchPage = () => {
               initial={{ x: 20}}
               animate={{ x: 0}}
               transition={{duration: 0.8}}
-            >
+            >   
                 {filteredHotel && filteredHotel.map((hotel) => (
                   <CardItem 
                     key={hotel._id}
                     hotel={hotel}
                   />
                 ))}
+
+                {!isLoading && filteredHotel?.length === 0 && (
+                  <div className='w-full h-full flex flex-col justify-center items-center mt-20'>
+                    <img src={hotelImg} alt='hotel icon' className='w-70' />
+                    <h1 className='text-2xl text-gray-600 font-medium mt-10'>Hotel not found</h1>
+                  </div>
+                )}
                 
             </motion.div>
         </div>
