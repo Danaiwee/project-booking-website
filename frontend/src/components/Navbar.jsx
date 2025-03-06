@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { Lock } from "lucide-react";
 import { LogOutIcon } from "lucide-react";
 
-import userProfile from "../assets/user_profile.jpg";
 import { useUserStore } from "../store/useUserStore";
 
 const Navbar = () => {
@@ -29,8 +28,8 @@ const Navbar = () => {
             </Link>
           )}
           {user && (
-            <>
-              <Link to="/profile">
+            <div className='flex items-center gap-2 relative'>
+              <Link to={`/bookings/${user?._id}`}>
                 <div className="w-fit rounded-full overflow-hidden">
                   <img src={user?.profileImg} alt="Profile" className="size-10" />
                 </div>
@@ -39,7 +38,7 @@ const Navbar = () => {
                 className="size-5 text-gray-300 cursor-pointer"
                 onClick={() => logout()}
               />
-            </>
+            </div>
           )}
           {!user && (
             <Link to="/login">

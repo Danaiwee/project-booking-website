@@ -11,6 +11,7 @@ import SearchPage from "./pages/SearchPage";
 import { useUserStore } from "./store/useUserStore";
 import PurchasePage from "./pages/PurchasePage";
 import SuccessPage from "./pages/SuccessPage";
+import BookingPage from "./pages/BookingPage";
 
 const App = () => {
   const location = useLocation();
@@ -34,6 +35,7 @@ const App = () => {
         <Route path='/search' element={<SearchPage />} />
         <Route path='/purchase/:id' element={user ? <PurchasePage /> : <Navigate to='/login' />} />
         <Route path='/purchase/success/:id' element={user ? <SuccessPage /> : <Navigate to='/login' />} />
+        <Route path='/bookings/:id' element={user ? <BookingPage /> : <Navigate to='/login' />} />
       </Routes>
       <Toaster />
     </div>

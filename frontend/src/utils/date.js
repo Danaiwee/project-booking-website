@@ -60,3 +60,20 @@ export const cancelDate = (date) => {
 
   return formattedDate.toLocaleDateString("en-US", options);
 };
+
+export const formatStartAndEndDate = (dateArray) => {
+  if (!dateArray || dateArray.length === 0) return null;
+
+  const options = { weekday: "long", day: "2-digit", month: "long", year: "numeric" };
+
+  // Convert first date (startDate)
+  const startDate = new Date(dateArray[0]);
+  const formattedStartDate = startDate.toLocaleDateString("en-US", options);
+
+  // Convert last date + 1 day (endDate)
+  const endDate = new Date(dateArray[dateArray.length - 1]);
+  endDate.setDate(endDate.getDate() + 1);
+  const formattedEndDate = endDate.toLocaleDateString("en-US", options);
+
+  return { startDate: formattedStartDate, endDate: formattedEndDate };
+};
