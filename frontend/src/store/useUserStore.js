@@ -69,11 +69,15 @@ export const useUserStore = create((set, get) => ({
     logout: async() => {
         set({isLoading: false})
         try {
+            localStorage.removeItem('user');
+            localStorage.removeItem('user-booking');
+            localStorage.removeItem('user-bookings');
+
             await axios.post("/auth/logout");
             toast.success("Logged out successfully");
 
             set({user: null});
-            localStorage.removeItem('user');
+            
         } catch (error) {
             console.log("Error in logout useUserStore: ", error.message);
             throw new Error(error.message);
@@ -110,13 +114,13 @@ export const useUserStore = create((set, get) => ({
         }
     },
 
-    getBookings: async() => {
+    getBookings: async(userId) => {
         set({isLoading: true});
         try {
-            const res = await axios.get("/booking");
+            const res = await axios.get(`/booking/all/${userId}`);
             const data = await res.data;
 
-            set({booking: data});
+            set({bookings: data});
             localStorage.setItem("user-bookings", JSON.stringify(data));
         } catch (error) {
             console.log("Error in getBooking: ", error.message);

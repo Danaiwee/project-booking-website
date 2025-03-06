@@ -3,10 +3,10 @@ import { DateRange } from "react-date-range";
 
 import { formatDate } from "../utils/date.js";
 import { useSearchStore } from "../store/useSearchStore.js";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useHotelStore } from "../store/useHotelStore.js";
+import { useNavigate } from "react-router-dom";
 
 const Filter = () => {
+  
   const { getSearchDetails, searchDetails, setSearchDetails } = useSearchStore();
   const [searchData, setSearchData] = useState({
     place: searchDetails?.place || "",

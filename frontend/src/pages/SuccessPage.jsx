@@ -2,41 +2,41 @@ import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import Confetti from 'react-confetti';
+import Confetti from "react-confetti";
 
 import { useUserStore } from "../store/useUserStore.js";
-import { useSearchStore } from '../store/useSearchStore.js';
+import { useSearchStore } from "../store/useSearchStore.js";
 
 const SuccessPage = () => {
-  const {id} = useParams();
-  const {getBooking, booking} = useUserStore();
-  const {setSearchDetails} = useSearchStore();
+  const { id } = useParams();
+  const { getBooking, booking } = useUserStore();
+  const { setSearchDetails } = useSearchStore();
 
   const navigate = useNavigate();
 
   useEffect(() => {
     getBooking(id);
-  },[getBooking]);
+  }, [getBooking]);
 
   const handleBack = async (e) => {
     e.preventDefault();
-    
+
     await setSearchDetails();
     navigate("/");
   };
 
   return (
-    <main className="w-full h-screen overflow-hidden py-20 px-5 bg-gray-100">
-      <Confetti 
+    <main className="w-full h-full overflow-hidden px-5 bg-gray-100">
+      <Confetti
         width={window.innerWidth}
         height={window.innerHeight}
         gravity={0.1}
-        style={{zIndex: 99}}
+        style={{ zIndex: 99 }}
         numberOfPieces={700}
         recycle={false}
-      />  
+      />
       <motion.div
-        className="w-full h-[60vh] flex items-center justify-center mx-auto"
+        className="w-full h-[95vh] flex items-center justify-center mx-auto overflow-hidden"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
@@ -55,21 +55,27 @@ const SuccessPage = () => {
 
           <div className="w-full max-w-[380px] rounded-md  bg-gray-600 flex flex-col px-5 py-2 mt-5 gap-1">
             <div className="flex items-center justify-between">
-              <p className="text-xs sm:text-sm text-gray-200 ">Booking number:</p>
+              <p className="text-xs sm:text-sm text-gray-200 ">
+                Booking number:
+              </p>
               <p className="text-xs sm:text text-emerald-500 font-medium">
                 #{booking?._id}
               </p>
             </div>
           </div>
-            <p className='text-xs text-emerald-500 underline font-medium'>See you booking detail</p>
+          <Link to={`/bookings/${booking?.user}`}>
+            <p className="text-xs text-emerald-500 underline font-medium">
+              See you booking detail
+            </p>
+          </Link>
 
           <motion.button
             className="w-full py-2 rounded-md bg-blue-900 hover:bg-blue-800 text-white flex items-center justify-center gap-2 mt-2 cursor-pointer mb-5 font-medium"
             whileTap={{ scale: 0.95 }}
             onClick={handleBack}
           >
-              Back to home
-              <ArrowRight className="size-4 text-white" />
+            Back to home
+            <ArrowRight className="size-4 text-white" />
           </motion.button>
         </div>
       </motion.div>

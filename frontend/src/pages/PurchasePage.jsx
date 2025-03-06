@@ -251,7 +251,7 @@ const PurchasePage = () => {
 
           <motion.div 
             className="flex-1 flex flex-col mt-5 md:mt-0 gap-3"
-            initial={{opacity: 0, x: 20}}
+            initial={{opacity: 0, x: -20}}
             animate={{opacity: 1, x: 0}}
             transition={{duration: 0.8}}
           >
