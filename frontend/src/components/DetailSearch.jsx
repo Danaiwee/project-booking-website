@@ -8,33 +8,28 @@ import { CalendarDays } from "lucide-react";
 import { User } from "lucide-react";
 import { Minus } from "lucide-react";
 import { Plus } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { useSearchStore } from "../store/useSearchStore.js";
-import { useHotelStore } from "../store/useHotelStore.js";
 import { formatDateRange, generateDateArray} from "../utils/date.js";
 
-const SearchBar = () => {
+const DetailsSearch = () => {
+  const { searchDetails, setSearchDetails } = useSearchStore();
   const [showCalendar, setShowCalendar] = useState(false);
   const [personInput, setPersonInput] = useState(false);
   const [searchData, setSearchData] = useState({
-    place: 'bangkok',
+    place: searchDetails?.place || 'bangkok',
     dates: {
-      startDate: new Date(),
-      endDate: new Date(new Date().setDate(new Date().getDate() + 1)),
+      startDate: searchDetails?.dates.startDate ||  new Date(),
+      endDate: searchDetails?.dates.endDate || new Date(new Date().setDate(new Date().getDate() + 1)),
       key: "selection",
     },
-    adult: 2,
-    children: 0,
-    room: 1,
-    minPrice: null,
-    maxPrice: null
+    adult: searchDetails?.adult || 2,
+    children: searchDetails?.children || 0,
+    room: searchDetails?.room || 1,
+    minPrice: searchDetails?.minPrice || null,
+    maxPrice: searchDetails?.minPrice || null
   });
-
-  const navigate = useNavigate();
-
-  const { searchDetails, setSearchDetails } = useSearchStore();
-  const { getHotelByCity } = useHotelStore();
 
   const dateArray = generateDateArray(
       searchData?.dates?.startDate,
@@ -51,45 +46,20 @@ const SearchBar = () => {
     }));
   };
 
-  const handleDataChange = (e) => {
-    const { name, value } = e.target;
-
-    setSearchData({
-      ...searchData,
-      [name]: value,
-    });
-  };
-
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     await setSearchDetails(searchData);
-    await getHotelByCity(searchData.place);
 
-    navigate(`/search?city=${searchData?.place}`);
+    setPersonInput(false);
+    setShowCalendar(false);
   };
 
   return (
     <section className="w-full max-w-7xl mx-auto relative -top-7 px-5">
       <div>
         <form className="flex flex-col lg:flex-row item-center bg-amber-500 rounded-md p-1 gap-1">
-          <div className="flex-2 flex items-center rounded-md px-2 py-2 bg-white">
-            <label>
-              <BedSingle className="text-gray-400 size-8" />
-            </label>
-            <input
-              type="text"
-              id="place"
-              name="place"
-              placeholder="Where are you going?"
-              className="w-full outline-none px-2 text-gray-500"
-              value={searchData.place}
-              onChange={handleDataChange}
-              required
-            />
-          </div>
-
-          <div className="relative flex-2 flex items-center rounded-md px-2 py-2 bg-white">
+          <div className="relative flex-3 flex items-center rounded-md px-2 py-2 bg-white">
             <label>
               <CalendarDays className="text-gray-400 size-8" />
             </label>
@@ -112,7 +82,7 @@ const SearchBar = () => {
             )}
           </div>
 
-          <div className="relative flex-2 flex items-center rounded-md px-2 py-2 bg-white">
+          <div className="relative flex-3 flex items-center rounded-md px-2 py-2 bg-white">
             <label>
               <User className="text-gray-400 size-8" />
             </label>
@@ -242,4 +212,4 @@ const SearchBar = () => {
   );
 };
 
-export default SearchBar;
+export default DetailsSearch;

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-import { DESTINATIONS1, DESTINATIONS2, PROPERTY_TYPES } from "../constants";
+import { DESTINATIONS1, DESTINATIONS2 } from "../constants";
 import Hero from "../components/Hero";
 import SearchBar from "../components/SearchBar";
-import PropertyType from "../components/PropertyType";
 import Features from "../components/Features";
-import DetailsPage from "./DetailsPage";
 import Destination from "../components/Destination";
 import Subscribe from "../components/Subscribe";
 import { useHotelStore } from "../store/useHotelStore.js";
@@ -49,8 +47,8 @@ const HomePage = () => {
           </h1>
 
           <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mt-3">
-            {features && features.map((feature) => (
-              <Features key={feature._id} />
+            {features && features.map((hotel) => (
+              <Features key={hotel._id} hotel={hotel}  />
             ))}
           </div>
         </div>

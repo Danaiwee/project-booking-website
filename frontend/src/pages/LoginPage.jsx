@@ -83,7 +83,7 @@ const LoginPage = () => {
               />
             </div>
 
-            <button className="btn btn-info mt-4 text-white">Login</button>
+            <button className="btn btn-info mt-4 text-white">{isLoading ? "Loging in..." : "Login"}</button>
           </form>
 
           <div className="flex items-center relative mb-5">

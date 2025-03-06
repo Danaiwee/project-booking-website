@@ -74,7 +74,6 @@ const RoomTypes = ({ room }) => {
     navigate(`/purchase/${room?._id}`);
   };
 
-  console.log("Search data", searchDetails);
 
   return (
     <div className="w-full border-1 border-gray-300 rounded-md shadow-md px-2 py-4 mt-3">
@@ -149,7 +148,7 @@ const RoomTypes = ({ room }) => {
                     </div>
                   </td>
                   <td>
-                    <div className="w-25 flex items-center gap-1">
+                    <div className="w-30 flex items-center gap-1">
                       {numberOfMaxPeople &&
                         numberOfMaxPeople.map((_, index) => (
                           <User key={index} />
@@ -176,7 +175,7 @@ const RoomTypes = ({ room }) => {
                     </button>
                     {isAvailable && (
                       <p className="text-xs text-red-500 font-medium mt-1">
-                        1 room left!!!
+                        {room?.totalRoom} room left!!!
                       </p>
                     )}
                   </td>
@@ -201,7 +200,7 @@ const RoomTypes = ({ room }) => {
                     </div>
                   </td>
                   <td>
-                    <div className="flex items-center gap-1">
+                    <div className="w-30 flex items-center gap-1">
                       {numberOfMaxPeople &&
                         numberOfMaxPeople.map((_, index) => (
                           <User key={index} />
@@ -228,7 +227,7 @@ const RoomTypes = ({ room }) => {
                     </button>
                     {isAvailable && (
                       <p className="text-xs text-red-500 font-medium mt-1">
-                        1 room left!!!
+                        {room?.totalRoom} room left!!!
                       </p>
                     )}
                   </td>
