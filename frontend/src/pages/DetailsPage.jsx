@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import location from "../assets/location.png";
+import {motion} from 'framer-motion';
 
+import location from "../assets/location.png";
 import RoomTypes from "../components/RoomTypes";
 import { useHotelStore } from "../store/useHotelStore.js";
 import { useSearchStore } from "../store/useSearchStore.js";
@@ -26,10 +27,21 @@ const DetailsPage = () => {
   return (
     <section className="w-full h-full my-10">
       <div className="w-full max-w-7xl mx-auto flex flex-col px-5">
-        <div className='w-full max-w-4xl mx-auto'>
+        <motion.div 
+          className='w-full max-w-4xl mx-auto'
+          initial={{opacity: 0, y: -20}}
+          animate={{opacity: 1, y: 0}}
+          transition={{duration: 0.8}}
+        >
           <DetailsSearch />
-        </div>
-        <div className="flex flex-col gap-3 md:flex-row md:gap-0 justify-between">
+        </motion.div>
+
+        <motion.div 
+          className="flex flex-col gap-3 md:flex-row md:gap-0 justify-between"
+          initial={{opacity: 0, y: 20}}
+          animate={{opacity: 1, y: 0}}
+          transition={{duration: 0.8}}
+        >
           <div className="flex flex-col">
             <h1 className="text-3xl font-bold text-gray-900">{hotel?.title}</h1>
             <div className="flex items-center gap-3 mt-1">
@@ -52,14 +64,19 @@ const DetailsPage = () => {
           >
             Reserve or book now!
           </button>
-        </div>
+        </motion.div>
 
-        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mt-5">
+        <motion.div 
+          className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mt-5"
+          initial={{opacity: 0, y: 20}}
+          animate={{opacity: 1, y: 0}}
+          transition={{duration: 0.8}}
+        >
           {hotel &&
             hotel?.images.map((image, index) => (
               <img src={image} className="rounded-md w-full h-70" key={index} />
             ))}
-        </div>
+        </motion.div>
 
         <div className="w-full flex flex-col gap-3 md:flex-row md:justify-between md:gap-5 mt-12">
           <div className="flex-4">

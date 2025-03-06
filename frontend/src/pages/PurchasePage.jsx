@@ -13,6 +13,7 @@ import {
   TowerControl,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import {motion} from 'framer-motion';
 
 import {
   formatDateRange,
@@ -113,7 +114,12 @@ const PurchasePage = () => {
         </p>
 
         <div className="flex flex-col-reverse md:flex-row md:gap-5 mt-2 md:mt-5">
-          <div className="flex-2 flex flex-col gap-5 mt-5 md:mt-0">
+          <motion.div 
+            className="flex-2 flex flex-col gap-5 mt-5 md:mt-0"
+            initial={{opacity: 0, x: -20}}
+            animate={{opacity: 1, x: 0}}
+            transition={{duration: 0.8}}
+          >
             <div className="bg-white px-4 py-6 rounded-md shadow-md">
               <h3 className="text-gray-900 text-lg font-bold">
                 Contact Details
@@ -241,9 +247,14 @@ const PurchasePage = () => {
                 Back
               </button>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="flex-1 flex flex-col mt-5 md:mt-0 gap-3">
+          <motion.div 
+            className="flex-1 flex flex-col mt-5 md:mt-0 gap-3"
+            initial={{opacity: 0, x: 20}}
+            animate={{opacity: 1, x: 0}}
+            transition={{duration: 0.8}}
+          >
             <div className="bg-white px-4 py-6 rounded-md shadow-md flex flex-col">
               <div className="flex justify-between gap-5">
                 <h3 className="text-md font-bold text-gray-900">
@@ -409,7 +420,7 @@ const PurchasePage = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
     </article>

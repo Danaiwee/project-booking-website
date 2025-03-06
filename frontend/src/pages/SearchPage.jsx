@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import {motion} from 'framer-motion';
+
 import Filter from '../components/Filter'
 import CardItem from '../components/CardItem'
 import { useHotelStore } from '../store/useHotelStore'
@@ -56,11 +58,21 @@ const SearchPage = () => {
   return (
     <section className='w-full h-full mt-5'>
         <div className='w-full max-w-7xl mx-auto flex flex-col sm:flex-row gap-2'>
-            <div className='flex-1'>
+            <motion.div 
+              className='flex-1'
+              initial={{ x: -20}}
+              animate={{ x: 0}}
+              transition={{duration: 0.8}}
+            >
                 <Filter />
-            </div>
+            </motion.div>
 
-            <div className='flex-3 flex flex-col gap-2'>
+            <motion.div 
+              className='flex-3 flex flex-col gap-2'
+              initial={{ x: 20}}
+              animate={{ x: 0}}
+              transition={{duration: 0.8}}
+            >
                 {filteredHotel && filteredHotel.map((hotel) => (
                   <CardItem 
                     key={hotel._id}
@@ -68,7 +80,7 @@ const SearchPage = () => {
                   />
                 ))}
                 
-            </div>
+            </motion.div>
         </div>
     </section>
   )

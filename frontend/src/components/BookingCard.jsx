@@ -1,4 +1,6 @@
 import { VerifiedIcon, Utensils } from "lucide-react";
+import {motion} from 'framer-motion';
+
 import { formatStartAndEndDate } from "../utils/date";
 
 const BookingCard = ({ booking }) => {
@@ -13,7 +15,12 @@ const BookingCard = ({ booking }) => {
   const endDate = dateRange.endDate;
 
   return (
-    <div className="w-full border-1 border-gray-300 shadow-md rounded-sm px-6 py-6 flex flex-col md:flex-row gap-3">
+    <motion.div 
+      className="w-full border-1 border-gray-300 shadow-md rounded-sm px-6 py-6 flex flex-col md:flex-row gap-3"
+      initial={{opacity: 0, y: 20}}
+      animate={{opacity: 1, y: 0}}
+      transition={{duration: 0.8}}
+    >
       <div className="flex-2">
         <img src={profileImg} alt="room" className="w-full h-full rounded-md" />
       </div>
@@ -79,7 +86,7 @@ const BookingCard = ({ booking }) => {
           </button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

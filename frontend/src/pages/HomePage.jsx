@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {motion} from 'framer-motion';
 
 import { DESTINATIONS1, DESTINATIONS2 } from "../constants";
 import Hero from "../components/Hero";
@@ -25,12 +26,23 @@ const HomePage = () => {
 
   }, [hotelType, hotels]);
 
+  if(isLoading){
+    return (
+      <div className="skeleton h-screen w-full"></div>
+    )
+  }
+
   return (
     <div className="flex flex-col relative mb-10">
       <Hero />
       <SearchBar />
-
-      <div className="w-full max-w-7xl mx-auto px-5 mt-2 flex flex-col gap-10">
+      
+      <motion.div 
+        className="w-full max-w-7xl mx-auto px-5 mt-2 flex flex-col gap-10"
+        initial={{opacity: 0, y: 20}}
+        animate={{opacity: 1, y: 0}}
+        transition={{duration: 0.8}}
+      >
         <div className="flex flex-col">
           <h1 className="text-gray-900 text-xl md:text-2xl font-bold">
             Browse by property type
@@ -70,7 +82,7 @@ const HomePage = () => {
             ))}
           </div>
         </div>
-      </div>
+      </motion.div>
 
       <div className='w-full bg-blue-900 mt-15 mx-auto'>
           <Subscribe />
