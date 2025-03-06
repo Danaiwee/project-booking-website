@@ -14,6 +14,8 @@ const PropertyTypes = ({ type }) => {
     { id: 5, title: "House", amount: type[4]?.count, image: cabinImg, src:type[4]?.type },
   ];
 
+  console.log("Types:", type)
+
   return (
     <>
     {properties.map((property) => (

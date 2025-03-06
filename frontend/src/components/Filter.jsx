@@ -3,17 +3,11 @@ import { DateRange } from "react-date-range";
 
 import { formatDate } from "../utils/date.js";
 import { useSearchStore } from "../store/useSearchStore.js";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useHotelStore } from "../store/useHotelStore.js";
 
 const Filter = () => {
-  const [searchParams ] = useSearchParams();
-  const type = searchParams.get("type");
-  const city = searchParams.get("city");
-
   const { getSearchDetails, searchDetails, setSearchDetails } = useSearchStore();
-  const { getHotelByCity, getHotelByType } = useHotelStore();
-
   const [searchData, setSearchData] = useState({
     place: searchDetails?.place || "",
     dates: {
@@ -33,6 +27,8 @@ const Filter = () => {
 
   const startDate = formatDate(searchData.dates.startDate);
   const endDate = formatDate(searchData.dates.endDate);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getSearchDetails();
@@ -66,10 +62,10 @@ const Filter = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
+  
     setSearchData((prevState) => ({
       ...prevState,
-      [name]: value === "" ? 0 : Number(value),
+      [name]: name === "place" ? value : value === "" ? 0 : Number(value), 
     }));
   };
 
@@ -77,12 +73,7 @@ const Filter = () => {
     e.preventDefault();
 
     await setSearchDetails(searchData);
-    
-    if(type){
-      await getHotelByType(type);
-    } else {
-      await getHotelByCity(city);
-    }
+    navigate(`/search?city=${searchData.place}`);
   };
 
   return (

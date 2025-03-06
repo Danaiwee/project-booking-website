@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useUserStore } from "../store/useUserStore.js";
 
-import room1 from "/room/room-1.jpg";
 import BookingCard from "../components/BookingCard.jsx";
 
 const BookingPage = () => {
