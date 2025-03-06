@@ -12,7 +12,7 @@ const Subscribe = () => {
           Signup and we'll send you the best deal
         </p>
 
-        <Link className="bg-gray-200 flex items-center gap-2 rounded-md mt-5 px-4 py-2 cursor-pointer active:scale-95">
+        <Link to='/signup' className="bg-gray-200 flex items-center gap-2 rounded-md mt-5 px-4 py-2 cursor-pointer active:scale-95">
           <Mail className="size-8 text-gray-500" />
           <p>Signup</p>
         </Link>
