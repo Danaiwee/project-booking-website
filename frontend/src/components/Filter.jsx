@@ -84,6 +84,8 @@ const Filter = () => {
       await getHotelByCity(city);
     }
   };
+
+  console.log("Search data", searchData);
   return (
     <div className="w-full bg-amber-500 px-4 py-6 rounded-lg flex flex-col">
       <h1 className="text-gray-900 font-bold text-2xl">Search</h1>

@@ -43,6 +43,18 @@ const RoomTypes = ({ room }) => {
           if (normalizedRoomBooking.includes(date)) {
             return false; // If a match is found, return false (not available)
           }
+        };
+
+        const totalGuests = searchDetails?.adult + searchDetails?.children;
+        const maxPeoeple = room?.maxPeople;
+        if(totalGuests>maxPeoeple){
+          return false;
+        };
+
+        const availableRoom = room?.totalRoom;
+        const useRoom = searchDetails?.room;
+        if(useRoom > availableRoom){
+          return false
         }
 
         return true; // If no match is found, return true (available)
@@ -61,6 +73,8 @@ const RoomTypes = ({ room }) => {
     
     navigate(`/purchase/${room?._id}`);
   };
+
+  console.log("Search data", searchDetails);
 
   return (
     <div className="w-full border-1 border-gray-300 rounded-md shadow-md px-2 py-4 mt-3">
@@ -135,7 +149,7 @@ const RoomTypes = ({ room }) => {
                     </div>
                   </td>
                   <td>
-                    <div className="flex items-center gap-1">
+                    <div className="w-25 flex items-center gap-1">
                       {numberOfMaxPeople &&
                         numberOfMaxPeople.map((_, index) => (
                           <User key={index} />
