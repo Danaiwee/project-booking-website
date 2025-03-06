@@ -7,6 +7,7 @@ import { connectDB } from './libs/db.js';
 import authRoutes from './routes/auth.route.js';
 import hotelRoutes from './routes/hotel.route.js';
 import roomRoutes from './routes/room.route.js';
+import bookingRoutes from './routes/booking.route.js';
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use(cors({
 app.use("/api/auth", authRoutes);
 app.use("/api/hotels", hotelRoutes);
 app.use("/api/rooms", roomRoutes);
+app.use("/api/booking", bookingRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

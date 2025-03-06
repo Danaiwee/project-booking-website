@@ -34,7 +34,7 @@ export const getRoom = async(req, res) => {
 export const createRoom = async (req, res) => {
   try {
     const hotelId = req.params.hotelId;
-    const { title, price, area, bedType, bedAmount, maxPeople } = req.body;
+    const { title, price, area, bedType, bedAmount, maxPeople, images, breakfast, totalRoom } = req.body;
 
     const newRoom = new Room({
       title,
@@ -44,6 +44,9 @@ export const createRoom = async (req, res) => {
       bedAmount,
       maxPeople,
       hotel: hotelId,
+      images,
+      breakfast,
+      totalRoom
     });
 
     await newRoom.save();

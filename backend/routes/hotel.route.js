@@ -21,7 +21,7 @@ router.get("/getAll", getAllHotels);
 router.get("/count", getCountByType);
 router.get("/featured", getFeaturedHotels);
 router.get("/:id", getHotel);
-router.get("/search/:city", getHotelByCity);
+router.get("/city/:city", getHotelByCity);
 router.get("/type/:type", getHotelByType);
 router.get("/rooms/:id", getHotelRooms);
 router.post("/create", protectRoute, checkAdmin, createHotel);

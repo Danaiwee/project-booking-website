@@ -43,7 +43,16 @@ const roomSchema = new mongoose.Schema({
 
     dateBooking: [{
         type: Date
-    }]
+    }],
+
+    breakfast: {
+        type: Number,
+    },
+
+    totalRoom: {
+        type: Number,
+        required: true
+    }
 
 }, {timestamps: true});
 

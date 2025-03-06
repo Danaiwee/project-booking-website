@@ -19,7 +19,7 @@ export const getHotel = async(req, res) => {
     try {
         const hotelId = req.params.id;
         
-        const hotel = await Hotel.findById(hotelId);
+        const hotel = await Hotel.findById(hotelId).populate("rooms");
         if(!hotel){
             return res.status(404).json({error: "Hotel not found"});
         };
@@ -67,12 +67,12 @@ export const getHotelRooms = async(req, res) => {
     try {
         const hotelId = req.params.id;
 
-        const hotels = await Hotel.findById(hotelId).select("rooms");
-        if(!hotels){
+        const hotel = await Hotel.findById(hotelId).populate("rooms");
+        if(!hotel){
             return res.status(404).json({error: "Hotel not found"});
         };
         
-        return res.status(200).json(hotels);
+        return res.status(200).json(hotel);
     } catch (error) {
         console.log("Error in getHotelRoom: ", error.message);
         return res.status(500).json({error: "Internal server error"});
@@ -103,9 +103,9 @@ export const getCountByType = async(req, res) => {
 
         return res.status(200).json([
             {type: "hotel", count: hotelCount},
-            {type: "villa", count: villaCount},
-            {type: "resort", count: resortCount},
             {type: "apartment", count: apartmentCount},
+            {type: "resort", count: resortCount},
+            {type: "villa", count: villaCount},
             {type: "house", count: houseCount}
         ]);
     } catch (error) {
@@ -116,7 +116,9 @@ export const getCountByType = async(req, res) => {
 
 export const createHotel = async(req, res) => {
     try {
-        const {name, type, city, distance, title, description, minPrice} = req.body;
+        const {name, type, city, distance, title, description, minPrice, images, profileImg, rating, 
+            location
+        } = req.body;
         if(!name || !type || !city || !distance || !title || !description || !minPrice){
             return res.status(400).json({error: "All fields are required"});
         };
@@ -129,6 +131,10 @@ export const createHotel = async(req, res) => {
             title,
             description,
             minPrice,
+            images,
+            profileImg,
+            rating,
+            location
         });
 
         if(newHotel){
