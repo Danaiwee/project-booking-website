@@ -6,6 +6,8 @@ export const useUserStore = create((set, get) => ({
     user: JSON.parse(localStorage.getItem('user')) || null,
     isLoading: false,
     isCheckingAuth: false,
+    booking: JSON.parse(localStorage.getItem('user-booking')) || null,
+    bookings: null,
 
     signup: async({name, username, email, password, confirmPassword}) => {
         set({isLoading: true});
@@ -91,6 +93,20 @@ export const useUserStore = create((set, get) => ({
             throw new Error(error.message);
         } finally {
             set({isCheckingAuth: false})
+        }
+    },
+
+    getBooking: async(userId) => {
+        set({isLoading: true});
+        try {
+            const res = await axios.get(`/booking/${userId}`);
+            const data = await res.data;
+
+            set({booking: data});
+            localStorage.setItem("user-booking", JSON.stringify(data));
+        } catch (error) {
+            console.log("Error in getBooking: ", error.message);
+            throw new Error(error.message);
         }
     },
 }));

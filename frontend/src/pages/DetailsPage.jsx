@@ -23,8 +23,6 @@ const DetailsPage = () => {
     getHotelRooms(id);
   }, [getHotelRooms, id]);
 
-  console.log("Search Details: ", searchDetails);
-
   return (
     <section className="w-full h-full my-10">
       <div className="w-full max-w-7xl mx-auto flex flex-col px-5">

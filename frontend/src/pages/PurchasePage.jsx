@@ -82,7 +82,7 @@ const PurchasePage = () => {
 
     await createPurchase(purchaseData);
 
-    navigate('/purchase/success');
+    navigate(`/purchase/success/${user._id}`);
   };
 
   const roomPrice = Number(purchaseData.totalPrice);
@@ -100,9 +100,6 @@ const PurchasePage = () => {
   const cancelday = cancelDate(dateArray[0]);
 
   const guests = searchDetails?.adult + searchDetails?.children;
-
-  console.log("Date Array: ", dateArray);
-  console.log("SearchDetails", searchDetails);
 
   return (
     <article className="w-full h-full bg-gray-100">

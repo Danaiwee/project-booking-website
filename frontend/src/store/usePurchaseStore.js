@@ -22,4 +22,5 @@ export const usePurchaseStore = create((set, get) => ({
             set({isLoading: false})
         }
     },
+
 }))
