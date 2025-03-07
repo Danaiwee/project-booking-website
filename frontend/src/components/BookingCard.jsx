@@ -68,7 +68,7 @@ const BookingCard = ({ booking }) => {
       </div>
 
       <div className="flex-3 flex flex-col justify-between items-end">
-        <p className="text-sm text-green-600">Booking id: #{bookingId}</p>
+        <p className="text-sm text-green-600">Booking id: #{bookingId.slice(0,15).toUpperCase()}</p>
 
         <div className="flex flex-col gap-1 items-end">
           <div className="flex items-end gap-1">
