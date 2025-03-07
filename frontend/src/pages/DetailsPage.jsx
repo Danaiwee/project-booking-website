@@ -1,6 +1,7 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {motion} from 'framer-motion';
+import { ArrowLeft } from "lucide-react";
 
 import location from "../assets/location.png";
 import RoomTypes from "../components/RoomTypes";
@@ -13,6 +14,8 @@ const DetailsPage = () => {
   const { id } = useParams();
   const { getHotelRooms, hotel, isLoading } = useHotelStore();
   const { searchDetails } = useSearchStore();
+
+  const navigate = useNavigate();
 
   const differentDay = calculateDaysDifference(
     searchDetails?.dates.startDate,
@@ -33,10 +36,10 @@ const DetailsPage = () => {
   }
 
   return (
-    <section className="w-full h-full my-10">
+    <section className="w-full h-full my-10 relative">
       <div className="w-full max-w-7xl mx-auto flex flex-col px-5">
         <motion.div 
-          className='w-full max-w-4xl mx-auto'
+          className='w-full max-w-4xl mx-auto px-5 lg:px-0'
           initial={{opacity: 0, y: -20}}
           animate={{opacity: 1, y: 0}}
           transition={{duration: 0.8}}
@@ -45,7 +48,7 @@ const DetailsPage = () => {
         </motion.div>
 
         <motion.div 
-          className="flex flex-col gap-3 md:flex-row md:gap-0 justify-between"
+          className="flex flex-col gap-3  md:flex-row md:gap-0 justify-between"
           initial={{opacity: 0, y: 20}}
           animate={{opacity: 1, y: 0}}
           transition={{duration: 0.8}}
@@ -132,6 +135,17 @@ const DetailsPage = () => {
           {hotel && hotel?.rooms.map((room) => <RoomTypes key={room._id} room={room} />)}
         </div>
       </dialog>
+
+      <motion.button 
+        className='absolute flex items-center -top-7 left-3 rounded-md p-3 border-1 border-gray-300 gap-2 cursor-pointer hover:bg-gray-100 active:scale-95'
+        initial={{opacity: 0}}
+        animate={{opacity: 1}}
+        transition={{duration: 0.8}}
+        onClick={() => navigate("/search")}
+      >
+            <ArrowLeft className='size-4' />
+            <span className='hidden lg:inline'>Back</span>
+      </motion.button>
     </section>
   );
 };

@@ -62,7 +62,7 @@ const DetailsSearch = () => {
               className="w-full text-gray-400 cursor-pointer px-2 text-sm"
               onClick={() => setShowCalendar(!showCalendar)}
             >
-              <p>{startDate} - {endDate}</p>
+              <p className='text-xs lg:text-sm'>{startDate} - {endDate}</p>
             </div>
 
             {showCalendar && (
@@ -105,7 +105,7 @@ const DetailsSearch = () => {
                     >
                       <Minus />
                     </button>
-                    <p className="w-3">{searchData.adult}</p>
+                    <p className="w-3 text-xs lg:text-sm">{searchData.adult}</p>
                     <button
                       className="hover:bg-blue-100 cursor-pointer rounded-md"
                       type="button"
@@ -137,7 +137,7 @@ const DetailsSearch = () => {
                     >
                       <Minus />
                     </button>
-                    <p className="w-3">{searchData.children}</p>
+                    <p className="w-3 text-xs lg:text-sm">{searchData.children}</p>
                     <button
                       className="hover:bg-blue-100 cursor-pointer rounded-md"
                       type="button"
@@ -169,7 +169,7 @@ const DetailsSearch = () => {
                     >
                       <Minus />
                     </button>
-                    <p className="w-3">{searchData.room}</p>
+                    <p className="w-3 text-xs lg:text-sm">{searchData.room}</p>
                     <button
                       className="hover:bg-blue-100 cursor-pointer rounded-md"
                       type="button"
