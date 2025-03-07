@@ -73,6 +73,7 @@ const Filter = () => {
     e.preventDefault();
 
     await setSearchDetails(searchData);
+    setShowCalendar(false);
     navigate(`/search?city=${searchData.place}`);
   };
 
