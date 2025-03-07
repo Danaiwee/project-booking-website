@@ -15,7 +15,23 @@ const defaultSearchDetails = {
 };
 
 export const useSearchStore = create((set, get) => ({
-  searchDetails: JSON.parse(localStorage.getItem("searchDetails-1")) || null,
+  searchDetails: (() => {
+    const savedSearchDetails = localStorage.getItem("searchDetails-1");
+    if (!savedSearchDetails) return null;
+
+    const parsedDetails = JSON.parse(savedSearchDetails);
+    
+    // Convert date strings back to Date objects
+    return {
+      ...parsedDetails,
+      dates: {
+        ...parsedDetails.dates,
+        startDate: new Date(parsedDetails.dates.startDate),
+        endDate: new Date(parsedDetails.dates.endDate),
+      },
+    };
+  })(),
+  
   isLoading: false,
 
   getSearchDetails: () => get().searchDetails,

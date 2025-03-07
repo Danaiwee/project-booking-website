@@ -29,10 +29,9 @@ const HomePage = () => {
   }, [hotelType, hotels]);
 
   if (isLoading) {
-    return <div className="skeleton h-screen w-full"></div>;
+    return <div className="skeleton h-screen w-full"/>;
   }
 
-  const test = true;
 
   return (
     <div className="flex flex-col relative mb-10">

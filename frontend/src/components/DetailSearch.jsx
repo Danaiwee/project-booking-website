@@ -3,12 +3,7 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 
 import { useState } from "react";
 import { DateRange } from "react-date-range";
-import { BedSingle } from "lucide-react";
-import { CalendarDays } from "lucide-react";
-import { User } from "lucide-react";
-import { Minus } from "lucide-react";
-import { Plus } from "lucide-react";
-import { Link } from "react-router-dom";
+import { CalendarDays, User, Minus, Plus } from "lucide-react";
 
 import { useSearchStore } from "../store/useSearchStore.js";
 import { formatDateRange, generateDateArray} from "../utils/date.js";

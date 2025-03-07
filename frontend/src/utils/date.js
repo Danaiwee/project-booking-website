@@ -29,15 +29,15 @@ export const generateSingleDate = (date) => {
 };
 
 export const generateDateArray = (startDate, endDate) => {
-  // Ensure that startDate and endDate are Date objects
-  const start = new Date(startDate); 
+  const start = new Date(startDate);
   const end = new Date(endDate);
-  
-  const dateArray = [];
 
+  const dateArray = [];
   while (start <= end) {
-    dateArray.push(new Date(start).toISOString().split("T")[0]); // Push in YYYY-MM-DD format
-    start.setDate(start.getDate() + 1); // Move to next day
+    dateArray.push(
+      `${start.getFullYear()}-${String(start.getMonth() + 1).padStart(2, "0")}-${String(start.getDate()).padStart(2, "0")}`
+    );
+    start.setDate(start.getDate() + 1);
   }
 
   return dateArray;

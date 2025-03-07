@@ -125,7 +125,7 @@ const Filter = () => {
           <div className="w-full flex items-center justify-between px-4">
             <p className="text-sm">Min price (pernight)</p>
             <input
-              className="w-12 bg-white rounded-md text-center text-sm py-1"
+              className="w-16 bg-white rounded-md text-center text-xs py-1.5 text-gray-500"
               type="number"
               name="minPrice"
               min="0"
@@ -137,7 +137,7 @@ const Filter = () => {
           <div className="w-full flex items-center justify-between px-4">
             <p className="text-sm">Max price (pernight)</p>
             <input
-              className="w-12 bg-white rounded-md text-center text-sm py-1"
+              className="w-16 bg-white rounded-md text-center text-xs py-1.5 text-gray-500"
               type="number"
               min="0"
               name="maxPrice"
@@ -149,7 +149,7 @@ const Filter = () => {
           <div className="w-full flex items-center justify-between px-4">
             <p className="text-sm">Adults</p>
             <input
-              className="w-12 bg-white rounded-md text-center text-sm py-1"
+              className="w-16 bg-white rounded-md text-center text-xs py-1.5 text-gray-500"
               type="number"
               min="1"
               name="adult"
@@ -161,7 +161,7 @@ const Filter = () => {
           <div className="w-full flex items-center justify-between px-4">
             <p className="text-sm">Childrens</p>
             <input
-              className="w-12 bg-white rounded-md text-center text-sm py-1"
+              className="w-16 bg-white rounded-md text-center text-xs py-1.5 text-gray-500"
               type="number"
               min="0"
               name="children"
@@ -173,7 +173,7 @@ const Filter = () => {
           <div className="w-full flex items-center justify-between px-4">
             <p className="text-sm">Room</p>
             <input
-              className="w-12 bg-white rounded-md text-center text-sm py-1"
+              className="w-16 bg-white rounded-md text-center text-sm py-1"
               type="number"
               min="1"
               name="room"
