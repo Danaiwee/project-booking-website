@@ -81,7 +81,10 @@ export const getHotelRooms = async(req, res) => {
 
 export const getFeaturedHotels = async(req, res)=> {
     try {
-        const hotels = await Hotel.find({featured: true});
+        const hotels = await Hotel.aggregate([
+            {$match : {featured: true}},
+            {$sample: {size: 4}}
+        ]);
         if(!hotels){
             return res.status(404).json({error: "Hotel not found"});
         };
