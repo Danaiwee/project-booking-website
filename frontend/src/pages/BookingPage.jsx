@@ -18,7 +18,7 @@ const BookingPage = () => {
     <section className="w-full min-h-screen bg-gray-100">
       <div className="w-full max-w-7xl mx-auto flex flex-col py-10 px-10 gap-5">
         <h1 className="text-4xl font-bold mb-5">Your Bookings</h1>
-        {bookings.length === 0 && (
+        {bookings?.length === 0 && (
           <motion.div 
             className='mt-25 w-full flex flex-col justify-center items-center'
             initial={{opacity: 0, y: 20}}
