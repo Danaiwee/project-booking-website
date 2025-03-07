@@ -82,7 +82,8 @@ This project is a **booking application** designed with a full-stack approach us
 - ![MongoDB](https://img.shields.io/badge/-MongoDB-47A248?logo=mongodb&logoColor=white&style=flat) **MongoDB**  
 - ![Express.js](https://img.shields.io/badge/-Express.js-000000?logo=express&logoColor=white&style=flat) **Express.js**  
 - ![Node.js](https://img.shields.io/badge/-Node.js-43853D?logo=node.js&logoColor=white&style=flat) **Node.js**  
-- ![Zustand](https://img.shields.io/badge/-Zustand-FF9F00?logo=zustand&logoColor=black&style=flat) **Zustand**  
+- ![Zustand](https://img.shields.io/badge/-Zustand-FF9F00?logo=zustand&logoColor=black&style=flat) **Zustand**
+- ![Axios](https://img.shields.io/badge/-Axios-5A29E4?logo=axios&logoColor=white&style=flat) **Axios**
 - ![TailwindCSS](https://img.shields.io/badge/-Tailwind%20CSS-38B2AC?logo=tailwindcss&logoColor=white&style=flat) **Tailwind CSS**  
 - ![Framer Motion](https://img.shields.io/badge/-Framer%20Motion-FF4154?logo=framer&logoColor=white&style=flat) **Framer Motion**  
 - ![React Router](https://img.shields.io/badge/-React%20Router-DCDCDC?logo=reactrouter&logoColor=black&style=flat) **React Router DOM**  
