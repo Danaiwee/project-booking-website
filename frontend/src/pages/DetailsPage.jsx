@@ -12,7 +12,7 @@ import DetailsSearch from "../components/DetailSearch.jsx";
 
 const DetailsPage = () => {
   const { id } = useParams();
-  const { getHotelRooms, hotel } = useHotelStore();
+  const { getHotelRooms, hotel, isLoading } = useHotelStore();
   const { searchDetails } = useSearchStore();
 
   const differentDay = calculateDaysDifference(
@@ -23,6 +23,15 @@ const DetailsPage = () => {
   useEffect(() => {
     getHotelRooms(id);
   }, [getHotelRooms, id]);
+
+
+  if(isLoading){
+    return (
+      <div className='w-full h-[80vh] overflow-hidden flex items-center justify-center'>
+        <span className='loading loading-dots loading-xl'></span>
+      </div>
+    )
+  }
 
   return (
     <section className="w-full h-full my-10">
