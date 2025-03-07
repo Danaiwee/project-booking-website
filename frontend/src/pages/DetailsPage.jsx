@@ -7,7 +7,6 @@ import RoomTypes from "../components/RoomTypes";
 import { useHotelStore } from "../store/useHotelStore.js";
 import { useSearchStore } from "../store/useSearchStore.js";
 import { calculateDaysDifference } from "../utils/date.js";
-import SearchBar from "../components/SearchBar.jsx";
 import DetailsSearch from "../components/DetailSearch.jsx";
 
 const DetailsPage = () => {

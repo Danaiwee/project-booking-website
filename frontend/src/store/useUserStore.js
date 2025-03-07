@@ -127,4 +127,24 @@ export const useUserStore = create((set, get) => ({
             throw new Error(error.message);
         }
     },
+
+    cancelBooking: async(bookingId) => {
+        set({isLoading: false});
+        try {
+            await axios.delete(`/booking/${bookingId}`);
+            
+            set((state) => {
+                const updatedBookings = state.bookings.filter((booking) => booking._id !== bookingId);
+                localStorage.setItem("user-booking", JSON.stringify(updatedBookings));
+
+                toast.success("Cancel Booking successfully");
+                return {bookings: updatedBookings}
+            })
+        } catch (error) {
+            console.log("Error in createPurchase", error.message);
+            throw new Error(error.message);
+        } finally {
+            set({isLoading: false})
+        }
+    },
 }));
