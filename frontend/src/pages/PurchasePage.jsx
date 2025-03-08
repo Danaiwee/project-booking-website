@@ -212,7 +212,7 @@ const PurchasePage = () => {
                 </div>
 
                 <p className="text-lg text-gray-700 font-medium">
-                  THB {roomPrice}
+                  THB {roomPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                 </p>
               </div>
               <div className="flex items-center justify-between mt-5">
