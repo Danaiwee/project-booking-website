@@ -59,7 +59,7 @@ const SuccessPage = () => {
                 Booking number:
               </p>
               <p className="text-xs sm:text text-emerald-500 font-medium">
-                #{booking?._id}
+                #{booking?._id.slice(-15).toUpperCase()}
               </p>
             </div>
           </div>

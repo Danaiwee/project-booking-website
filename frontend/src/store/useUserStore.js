@@ -8,6 +8,7 @@ export const useUserStore = create((set, get) => ({
     isCheckingAuth: false,
     booking: JSON.parse(localStorage.getItem('user-booking')) || null,
     bookings: JSON.parse(localStorage.getItem("user-bookings")) || null,
+    cancelBookingId: JSON.parse(localStorage.getItem("bookingId")) || null,
 
     signup: async({name, username, email, password, confirmPassword}) => {
         set({isLoading: true});
@@ -147,4 +148,15 @@ export const useUserStore = create((set, get) => ({
             set({isLoading: false})
         }
     },
+
+    setCancelBookingId: async(bookingId) => {
+        set({isLoading: true})
+        try {
+            set({cancelBookingId: bookingId})
+            localStorage.setItem("bookingId", JSON.stringify(bookingId));
+        } catch (error) {
+            console.log("Error in setBookingId useUserStore: ", error.message);
+            throw new Error(error.message);
+        }
+    }
 }));

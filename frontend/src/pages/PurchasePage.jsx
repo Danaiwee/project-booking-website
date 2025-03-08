@@ -24,6 +24,7 @@ import { useHotelStore } from "../store/useHotelStore";
 import { useSearchStore } from "../store/useSearchStore.js";
 import { useUserStore } from "../store/useUserStore.js";
 import { usePurchaseStore } from "../store/usePurchaseStore.js";
+import { generateNewDateArr } from "../utils/generateArray.js";
 
 const PurchasePage = () => {
   const { breakfast } = useHotelStore();
@@ -53,16 +54,18 @@ const PurchasePage = () => {
         searchDetails?.dates.startDate,
         searchDetails?.dates.endDate
       ).slice(0, -1);
+      const newDateArray = generateNewDateArr(dateArray, searchDetails.room);
 
       const totalPrice = breakfast
-        ? ((Number(room?.price ?? 0) + Number(room?.breakfast ?? 0)) * Number(dateArray.length ?? 1))
-        : Number(room?.price ?? 0) * Number(dateArray.length ?? 1);
+        ? ((Number(room?.price ?? 0) + Number(room?.breakfast ?? 0)) * Number(dateArray.length ?? 1) * Number(searchDetails?.room))
+        : Number(room?.price ?? 0) * Number(dateArray.length ?? 1) * Number(searchDetails?.room);
+      
 
       setPurchaseData({
         user: user?._id || "",
         hotel: hotel?._id || "",
         room: room?._id || "",
-        dates: dateArray || [],
+        dates: newDateArray || [],
         breakfast: breakfast,
         totalPrice: totalPrice,
         adult: searchDetails?.adult || 2,
@@ -82,7 +85,6 @@ const PurchasePage = () => {
     e.preventDefault();
 
     await createPurchase(purchaseData);
-
     navigate(`/purchase/success/${user._id}`);
   };
 
@@ -303,22 +305,19 @@ const PurchasePage = () => {
               </div>
 
               <h3 className="text-md font-bold text-gray-900 mt-3">
-                (1x) {room?.title} - Room Only
+                ({purchaseData.roomAmount}x) {room?.title} - Room Only
               </h3>
-              <p className="text-xs font-bold text-red-600">
-                {searchDetails?.room} room(s) left!
-              </p>
 
               <div className="flex items-center gap-2 mt-3">
                 <User className="size-5 text-gray-500" />
                 <p className="text-xs font-bold text-gray-500">
-                  {guests} Guests
+                  {guests} Guests/room
                 </p>
               </div>
               <div className="flex items-center gap-2 mt-1">
                 <BedDouble className="size-5 text-gray-500" />
                 <p className="text-xs font-bold text-gray-500">
-                  {room?.bedAmount} {room?.bedType}
+                  {room?.bedAmount} {room?.bedType}/room
                 </p>
               </div>
               <div className="flex items-center gap-2 mt-1">

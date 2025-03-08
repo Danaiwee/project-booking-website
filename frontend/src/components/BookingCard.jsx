@@ -3,13 +3,14 @@ import { motion } from "framer-motion";
 
 import { formatStartAndEndDate } from "../utils/date";
 import { useUserStore } from "../store/useUserStore";
+import { useState } from "react";
 
 const BookingCard = ({ booking }) => {
-  const {cancelBooking} = useUserStore();
+  const {cancelBooking, setCancelBookingId, cancelBookingId} = useUserStore();
 
-  const { title: hotelTitle, distance, profileImg } = booking.hotel;
-  const { title: roomTitle } = booking.room;
-  const { totalPrice, _id: bookingId, dates, breakfast } = booking;
+  const { title: hotelTitle, distance, profileImg } = booking.hotel || {};
+  const { title: roomTitle } = booking.room || {};
+  const { totalPrice, _id: bookingId, dates, breakfast } = booking || {};
 
   const totalPriceAndTaxes = (totalPrice + totalPrice * 0.07).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
@@ -17,8 +18,13 @@ const BookingCard = ({ booking }) => {
   const startDate = dateRange.startDate;
   const endDate = dateRange.endDate;
 
+  const handleOpenModal = (id) => {
+    setCancelBookingId(id);
+    document.getElementById("my_modal_3").showModal()
+  };
+
   const handleCancel = async () => {
-    await cancelBooking(booking._id);
+    await cancelBooking(cancelBookingId);
     document.getElementById("my_modal_3").close();
   }
 
@@ -40,7 +46,7 @@ const BookingCard = ({ booking }) => {
           <div className="flex flex-col gap-0">
             <p className="text-xs text-gray-900">{distance}</p>
             <p className="text-md text-gray-900 font-medium">
-              1x {roomTitle} Room
+              {booking.roomAmount}x {roomTitle} Room
             </p>
             <p className="font-bold text-sm text-red-500 mt-3">
               Check-in and Check-out date
@@ -77,7 +83,7 @@ const BookingCard = ({ booking }) => {
 
       <div className="flex-3 flex flex-col justify-between items-end">
         <p className="text-sm text-green-600">
-          Booking id: #{bookingId.slice(0, 15).toUpperCase()}
+          Booking id: #{bookingId.slice(-15).toUpperCase()}
         </p>
 
         <div className="flex flex-col gap-1 items-end">
@@ -96,7 +102,7 @@ const BookingCard = ({ booking }) => {
 
           <button
             className="w-fit px-4 py-2 text-white text-xs font-medium bg-red-500 rounded-md cursor-pointer flex items-center gap-1"
-            onClick={() => document.getElementById("my_modal_3").showModal()}
+            onClick={() => handleOpenModal(bookingId)}
           >
             Cancel Booking
           </button>
@@ -125,7 +131,7 @@ const BookingCard = ({ booking }) => {
               </form>
               <button 
                 className="btn btn-soft btn-error"
-                onClick={handleCancel}
+                onClick={() => handleCancel()}
               >
                   Delete
               </button>
