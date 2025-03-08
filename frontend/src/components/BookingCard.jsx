@@ -11,9 +11,7 @@ const BookingCard = ({ booking }) => {
   const { title: roomTitle } = booking.room;
   const { totalPrice, _id: bookingId, dates, breakfast } = booking;
 
-  const totalPriceAndTaxes = (totalPrice + totalPrice * 0.07)
-    .toFixed(2)
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  const totalPriceAndTaxes = (totalPrice + totalPrice * 0.07).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
   const dateRange = formatStartAndEndDate(dates);
   const startDate = dateRange.startDate;

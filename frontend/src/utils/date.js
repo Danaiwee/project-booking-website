@@ -1,3 +1,5 @@
+
+//use in filter search to turn date to eg. 13Mar (just for UI)
 export const formatDate = (date) => {
   if (!date) return ""; // Handle null or undefined
 
@@ -7,6 +9,8 @@ export const formatDate = (date) => {
     .replace(" ", ""); // Remove space between day and month
 };
 
+
+//use in detailsPage to know how many days you will book (just for UI)
 export const calculateDaysDifference = (startDate, endDate) => {
   const start = new Date(startDate); // Convert startDate to Date object
   const end = new Date(endDate);     // Convert endDate to Date object
@@ -20,14 +24,7 @@ export const calculateDaysDifference = (startDate, endDate) => {
   return differenceInDays;
 };
 
-export const generateSingleDate = (date) => {
-  // Ensure the input is a Date object
-  const currentDate = new Date(date);
-
-  // Return an array with a single date formatted as YYYY-MM-DD
-  return [currentDate.toISOString().split("T")[0]];
-};
-
+//use for generate array to store date in form eg. "2025-03-07"
 export const generateDateArray = (startDate, endDate) => {
   const start = new Date(startDate);
   const end = new Date(endDate);
@@ -43,6 +40,7 @@ export const generateDateArray = (startDate, endDate) => {
   return dateArray;
 };
 
+//use in all search to fomat date in form eg. Mon, Mar 17, 2025
 export const formatDateRange = (date) => {
   const options = { weekday: "short", day: "numeric", month: "short", year: "numeric" };
 
@@ -51,6 +49,7 @@ export const formatDateRange = (date) => {
   return formattedDate;
 };
 
+//use in purchase page for minus 1 day from start date
 export const cancelDate = (date) => {
   const options = { weekday: "short", day: "numeric", month: "short", year: "numeric" };
 
@@ -61,6 +60,7 @@ export const cancelDate = (date) => {
   return formattedDate.toLocaleDateString("en-US", options);
 };
 
+//use in booking page for full date
 export const formatStartAndEndDate = (dateArray) => {
   if (!dateArray || dateArray.length === 0) return null;
 

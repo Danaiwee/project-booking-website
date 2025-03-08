@@ -13,11 +13,14 @@ import { useEffect, useState } from "react";
 import { generateDateArray } from "../utils/date.js";
 import { useNavigate } from "react-router-dom";
 import { useHotelStore } from "../store/useHotelStore.js";
+import { findMaxOfSameKey, generateObj } from "../utils/generateObject.js";
 
 const RoomTypes = ({ room }) => {
   const {setBookingType, setBookingRoom} = useHotelStore();
-  const [isAvailable, setIsAvailable] = useState(true);
   const { searchDetails } = useSearchStore();
+
+  const [isAvailable, setIsAvailable] = useState(true);
+  const [roomLeft, setRoomLeft] = useState(1);
 
   const navigate = useNavigate();
 
@@ -27,41 +30,49 @@ const RoomTypes = ({ room }) => {
 
   useEffect(() => {
     if (searchDetails) {
+      const startDate = searchDetails.dates.startDate
+      const endDate = searchDetails.dates.endDate
+      const guestDateRange = generateDateArray(startDate, endDate); // Generate date array between startDate and endDate (in YYYY-MM-DD format)
+      const normalizedRoomBooking = room?.dateBooking.map((date) => new Date(date).toISOString().split("T")[0]); // Normalize the room's dateBooking to the same format (YYYY-MM-DD)
+
+      const totalRoom = room?.totalRoom
+      const bookRoom = searchDetails?.room;
+      
+      const databaseDateObj = generateObj(normalizedRoomBooking);
+      const guestDateObj = generateObj(guestDateRange);
+    
       const checkAvailability = () => {
-        // Convert startDate and endDate to Date objects
-        const start = new Date(searchDetails.dates.startDate);
-        const end = new Date(searchDetails.dates.endDate);
-
-        // Generate date array between startDate and endDate (in YYYY-MM-DD format)
-        const dateArray = generateDateArray(start, end);
-
-        // Normalize the room's dateBooking to the same format (YYYY-MM-DD)
-        const normalizedRoomBooking = room?.dateBooking.map((date) => new Date(date).toISOString().split("T")[0]);
-
-        // Check if any of the generated dates match the normalized dateBooking array
-        for (let date of dateArray) {
-          if (normalizedRoomBooking.includes(date)) {
-            return false; // If a match is found, return false (not available)
+              
+        // Check if any of the generated dates match the normalized dateBooking array and also compare with max room
+        for(let date of guestDateRange){
+          const bookedRoom = (databaseDateObj[date] + bookRoom || bookRoom);
+          if(bookedRoom > totalRoom){
+            return false
           }
-        };
+        }
 
+        //check if guests are more than maxPeople
         const totalGuests = searchDetails?.adult + searchDetails?.children;
         const maxPeoeple = room?.maxPeople;
         if(totalGuests>maxPeoeple){
           return false;
         };
 
-        const availableRoom = room?.totalRoom;
-        const useRoom = searchDetails?.room;
-        if(useRoom > availableRoom){
-          return false
-        }
-
         return true; // If no match is found, return true (available)
       };
 
+      const checkRoomLeft = () => {
+        const maxDate = findMaxOfSameKey(databaseDateObj, guestDateObj);
+        
+        const availableRoom = totalRoom - maxDate;
+        
+        return availableRoom;
+      };
+
       setIsAvailable(checkAvailability());
-    }
+      setRoomLeft(checkRoomLeft());
+    };
+   
   }, [searchDetails, room]); // Re-run when searchDetails or room changes
 
 
@@ -73,7 +84,6 @@ const RoomTypes = ({ room }) => {
     
     navigate(`/purchase/${room?._id}`);
   };
-
 
   return (
     <div className="w-full border-1 border-gray-300 rounded-md shadow-md px-2 py-4 mt-3">
@@ -175,7 +185,7 @@ const RoomTypes = ({ room }) => {
                     </button>
                     {isAvailable && (
                       <p className="text-xs text-red-500 font-medium mt-1">
-                        {room?.totalRoom} room left!!!
+                        {roomLeft} room left!!!
                       </p>
                     )}
                   </td>
@@ -227,7 +237,7 @@ const RoomTypes = ({ room }) => {
                     </button>
                     {isAvailable && (
                       <p className="text-xs text-red-500 font-medium mt-1">
-                        {room?.totalRoom} room left!!!
+                        {roomLeft} room left!!!
                       </p>
                     )}
                   </td>
