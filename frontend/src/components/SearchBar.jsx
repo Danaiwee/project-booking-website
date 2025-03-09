@@ -3,22 +3,18 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 
 import { useState } from "react";
 import { DateRange } from "react-date-range";
-import { BedSingle } from "lucide-react";
-import { CalendarDays } from "lucide-react";
-import { User } from "lucide-react";
-import { Minus } from "lucide-react";
-import { Plus } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { BedSingle, CalendarDays, User, Minus, Plus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 import { useSearchStore } from "../store/useSearchStore.js";
 import { useHotelStore } from "../store/useHotelStore.js";
-import { formatDateRange, generateDateArray} from "../utils/date.js";
+import { formatDateRange, generateDateArray } from "../utils/date.js";
 
 const SearchBar = () => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [personInput, setPersonInput] = useState(false);
   const [searchData, setSearchData] = useState({
-    place: 'bangkok',
+    place: "bangkok",
     dates: {
       startDate: new Date(),
       endDate: new Date(new Date().setDate(new Date().getDate() + 1)),
@@ -28,20 +24,20 @@ const SearchBar = () => {
     children: 0,
     room: 1,
     minPrice: null,
-    maxPrice: null
+    maxPrice: null,
   });
 
   const navigate = useNavigate();
 
-  const { searchDetails, setSearchDetails } = useSearchStore();
+  const { setSearchDetails } = useSearchStore();
   const { getHotelByCity } = useHotelStore();
 
   const dateArray = generateDateArray(
-      searchData?.dates?.startDate,
-      searchData?.dates?.endDate
-    );
-    const startDate = formatDateRange(dateArray[0]);
-    const endDate = formatDateRange(dateArray[dateArray.length - 1]);
+    searchData?.dates?.startDate,
+    searchData?.dates?.endDate
+  );
+  const startDate = formatDateRange(dateArray[0]);
+  const endDate = formatDateRange(dateArray[dateArray.length - 1]);
 
   const handleDateChange = (item) => {
     // Update the dates in the searchData state correctly
@@ -54,19 +50,19 @@ const SearchBar = () => {
   const handleDataChange = (e) => {
     const { name, value } = e.target;
 
-    setSearchData({
-      ...searchData,
-      [name]: value,
-    });
+    setSearchData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    try {
+      await setSearchDetails(searchData);
+      await getHotelByCity(searchData.place);
 
-    await setSearchDetails(searchData);
-    await getHotelByCity(searchData.place);
-
-    navigate(`/search?city=${searchData?.place}`);
+      navigate(`/search?city=${searchData?.place}`);
+    } catch (error) {
+      console.log("Error in handleSubmit SearchBar: ", error);
+    }
   };
 
   return (
@@ -97,7 +93,9 @@ const SearchBar = () => {
               className="w-full text-gray-400 cursor-pointer px-2 text-sm"
               onClick={() => setShowCalendar(!showCalendar)}
             >
-              <p>{startDate} - {endDate}</p>
+              <p>
+                {startDate} - {endDate}
+              </p>
             </div>
 
             {showCalendar && (
@@ -120,7 +118,10 @@ const SearchBar = () => {
               className="w-full text-gray-400 cursor-pointer px-2 text-sm"
               onClick={() => setPersonInput(!personInput)}
             >
-              <p>{searchData.adult} Adult · {searchData.children} Children · {searchData.room} Room</p>
+              <p>
+                {searchData.adult} Adult · {searchData.children} Children ·{" "}
+                {searchData.room} Room
+              </p>
             </div>
             {personInput && (
               <div className="absolute top-25 lg:top-13 lg:left-5 w-[320px] flex flex-col  border-2 border-gray-200 px-10 py-6 rounded-md gap-3 shadow-lg z-50 bg-gray-100">
@@ -229,13 +230,13 @@ const SearchBar = () => {
               </div>
             )}
           </div>
-            <button
-              className="flex-1 h-12 bg-blue-900 rounded-md flex items-center justify-center text-white font-medium text-xl cursor-pointer px-8 py-2"
-              type="button"
-              onClick={handleFormSubmit}
-            >
-              Search
-            </button>
+          <button
+            className="flex-1 h-12 bg-blue-900 rounded-md flex items-center justify-center text-white font-medium text-xl cursor-pointer px-8 py-2"
+            type="button"
+            onClick={handleFormSubmit}
+          >
+            Search
+          </button>
         </form>
       </div>
     </section>
