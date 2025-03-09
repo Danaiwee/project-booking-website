@@ -21,8 +21,13 @@ const SuccessPage = () => {
   const handleBack = async (e) => {
     e.preventDefault();
 
-    await setSearchDetails();
-    navigate("/");
+    try {
+      await setSearchDetails();
+      navigate("/");
+    } catch (error) {
+      console.log("Error in successPage: ", error);
+    }
+    
   };
 
   return (
@@ -36,7 +41,7 @@ const SuccessPage = () => {
         recycle={false}
       />
       <motion.div
-        className="w-full h-[95vh] flex items-center justify-center mx-auto overflow-hidden"
+        className="w-full h-[94vh] flex items-center justify-center mx-auto overflow-hidden"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
