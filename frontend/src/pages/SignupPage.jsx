@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, {  useState } from "react";
+import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -17,26 +17,22 @@ const SignupPage = () => {
     confirmPassword: "",
   });
 
-  useEffect(() => {
-    setFormData({
-      name: "",
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
-  }, []);
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    signup(formData);
+    try {
+      await signup(formData);
+
+    } catch (error) {
+      console.log("Error in login: ", error.message);
+    }
+    
   };
   return (
     <motion.section
@@ -107,7 +103,10 @@ const SignupPage = () => {
               />
             </div>
 
-            <button className="btn btn-info mt-4 text-white text-md">
+            <button 
+              className="btn btn-info mt-4 text-white text-md"
+              disabled={isLoading}
+            >
               {isLoading ? "Signing up..." : "Sign up"}
             </button>
           </form>

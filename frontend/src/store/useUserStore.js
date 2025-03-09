@@ -35,6 +35,7 @@ export const useUserStore = create((set, get) => ({
             toast.success(`Welcome ${data.name}`);
         } catch (error) {
             console.log("Error in signup useUserStore: ", error.message);
+            toast.error(error.response.data.error || "Invalid credentials");
             throw new Error(error.message);
 
         } finally {
