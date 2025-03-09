@@ -15,8 +15,7 @@ import PropertyTypes from "../components/PropertyTypes.jsx";
 const HomePage = () => {
   const [type, setType] = useState(null);
   const [features, setFeatures] = useState(null);
-  const { getType, hotelType, hotels, getFeatured, isLoading } =
-    useHotelStore();
+  const { getType, hotelType, hotels, getFeatured, isLoading } = useHotelStore();
 
   useEffect(() => {
     getType();
@@ -31,7 +30,6 @@ const HomePage = () => {
   if (isLoading) {
     return <div className="skeleton h-screen w-full"/>;
   }
-
 
   return (
     <div className="flex flex-col relative mb-10">
