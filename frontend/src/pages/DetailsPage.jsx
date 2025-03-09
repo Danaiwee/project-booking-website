@@ -84,8 +84,8 @@ const DetailsPage = () => {
           transition={{duration: 0.8}}
         >
           {hotel &&
-            hotel?.images.map((image, index) => (
-              <img src={image} className="rounded-md w-full h-70" key={index} />
+            hotel?.images.map((image) => (
+              <img src={image} className="rounded-md w-full h-70" key={image} />
             ))}
         </motion.div>
 
