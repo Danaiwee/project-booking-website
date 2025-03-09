@@ -3,20 +3,23 @@ import { useNavigate } from "react-router-dom";
 import flag from "../assets/flag.png";
 import { useSearchStore } from "../store/useSearchStore.js";
 
-const Destination = ({data}) => {
-  const {setSearchDetails} = useSearchStore();
+const Destination = ({ data }) => {
+  const { setSearchDetails } = useSearchStore();
 
   const navigate = useNavigate();
 
   const handleClick = async (e) => {
     e.preventDefault();
+    try {
+      await setSearchDetails();
+      navigate(`/search?city=${data?.src}`);
 
-    await setSearchDetails();
-
-    navigate(`/search?city=${data?.src}`);
+    } catch (error) {
+      console.log("Error in Destination: ", error);
+    }
   };
   return (
-    <div
+    <button
       className="w-full h-60 rounded-xl overflow-hidden cursor-pointer"
       style={{
         backgroundImage: `url(${data?.image})`,
@@ -31,7 +34,7 @@ const Destination = ({data}) => {
           <img className="size-6" src={flag} alt="flagThai" />
         </div>
       </div>
-    </div>
+    </button>
   );
 };
 
