@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { useSearchStore } from "../store/useSearchStore.js";
 
@@ -10,11 +10,15 @@ const PropertyType = ({ property }) => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-
-    await setSearchDetails();
-
-    navigate(`/search?type=${src}`);
+    try {
+      await setSearchDetails();
+      navigate(`/search?type=${src}`);
+      
+    } catch (error) {
+      console.log("Error in propertyType: ", error);
+    }
   };
+
   return (
     <div className="card bg-base-100 w-60 shadow-lg">
       <figure>
@@ -24,10 +28,7 @@ const PropertyType = ({ property }) => {
         <h2 className="text-xl font-bold">{title}</h2>
         <p>{amount} properties</p>
         <div className="card-actions">
-          <button 
-            className="btn btn-primary mt-5"
-            onClick={handleClick}
-          >
+          <button className="btn btn-primary mt-5" onClick={handleClick}>
             Explore more
           </button>
         </div>
