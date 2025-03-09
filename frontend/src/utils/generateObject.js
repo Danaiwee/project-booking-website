@@ -4,7 +4,6 @@ export const generateObj = (dateArr) => {
   for (let date of dateArr) {
     newObj[date] = (newObj[date] || 0) + 1;
   }
-
   return newObj;
 };
 

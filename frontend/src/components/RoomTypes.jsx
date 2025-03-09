@@ -25,7 +25,7 @@ const RoomTypes = ({ room }) => {
   const navigate = useNavigate();
 
   const priceWithBreakfast = (room?.price ?? 0) + (room?.breakfast ?? 0);
-  const numberOfMaxPeople = Array.from({ length: room?.maxPeople ?? 0 });
+  const numberOfMaxPeople = Array(room?.maxPeople ?? 0).fill(null);
 
 
   useEffect(() => {
@@ -78,11 +78,14 @@ const RoomTypes = ({ room }) => {
 
   const handleChoose = async (e,type) => {
     e.preventDefault();
-
-    await setBookingType(type);
-    await setBookingRoom(room?._id);
+    try {
+      await setBookingType(type);
+      await setBookingRoom(room?._id);
     
-    navigate(`/purchase/${room?._id}`);
+      navigate(`/purchase/${room?._id}`);
+    } catch (error) {
+      console.log("Error in handleChoose RoomTypes: ", error);
+    }
   };
 
   return (
@@ -90,7 +93,7 @@ const RoomTypes = ({ room }) => {
       <div className="w-full flex flex-col md:flex-row justify-between items-start gap-5">
         <div className="flex-1 max-w-[240px] flex flex-col">
           <h1 className="text-xl font-bold text-gray-900">{room?.title}</h1>
-          <img src={room?.images[0]} className="w-full h-35 rounded-md" />
+          <img src={room?.images[0]} alt={room.title} className="w-full h-35 rounded-md" />
 
           <div className="flex justify-between mt-3">
             <div className="flex-1 flex items-center gap-2">
