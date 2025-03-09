@@ -36,12 +36,10 @@ const userSchema = new mongoose.Schema({
 
     bookingItems: [
         {
-            bookingId : {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Booking"
-            }
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Booking"
         }
-    ],
+     ]
 }, {timestamps: true})
 
 const User = mongoose.model("User", userSchema);
