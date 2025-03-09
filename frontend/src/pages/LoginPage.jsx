@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import {motion} from 'framer-motion';
+import toast from "react-hot-toast";
 
 import InputField from "../components/InputField";
 import { useUserStore } from "../store/useUserStore";
@@ -18,23 +19,22 @@ const LoginPage = () => {
     password: "",
   });
 
-  useEffect(() => {
-    setFormData({
-      email: "",
-      password: "",
-    })
-  }, [])
-
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    await login(formData);
+    try {
+      await login(formData);
+      navigate(from, {replace: true});
 
-    navigate(from, {replace: true});
+    } catch (error) {
+      console.log("Error in login: ", error.message);
+      toast.error("Invalid credentials")
+    }
   };
 
   useEffect(() => {
@@ -83,7 +83,12 @@ const LoginPage = () => {
               />
             </div>
 
-            <button className="btn btn-info mt-4 text-white">{isLoading ? "Loging in..." : "Login"}</button>
+            <button 
+              className="btn btn-info mt-4 text-white"
+              disabled={isLoading}
+            >
+                {isLoading ? "Loging in..." : "Login"}
+              </button>
           </form>
 
           <div className="flex items-center relative mb-5">
