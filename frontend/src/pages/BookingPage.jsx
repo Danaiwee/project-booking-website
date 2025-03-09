@@ -8,11 +8,16 @@ import book from '../assets/book.png';
 
 const BookingPage = () => {
   const {id} = useParams();
-  const { getBookings, bookings } = useUserStore();
+  const { getBookings, bookings, isLoading } = useUserStore();
 
   useEffect(() => {
     getBookings(id);
   }, [getBookings]);
+
+
+  if (isLoading) {
+    return <div className="skeleton h-[94vh] w-full"/>;
+  }
 
   return (
     <section className="w-full min-h-screen bg-gray-100">
@@ -29,7 +34,7 @@ const BookingPage = () => {
             <h1 className='text-4xl font-bold text-gray-500 mt-5'>No booking found</h1>
           </motion.div>
         )}
-        {bookings && bookings?.map((booking) => <BookingCard key={booking._id} booking={booking} />)}
+        {!isLoading && bookings && bookings?.map((booking) => <BookingCard key={booking._id} booking={booking} />)}
       </div>
     </section>
   );

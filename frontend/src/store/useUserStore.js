@@ -127,6 +127,8 @@ export const useUserStore = create((set, get) => ({
         } catch (error) {
             console.log("Error in getBooking: ", error.message);
             throw new Error(error.message);
+        }finally{
+            set({isLoading: false})
         }
     },
 
