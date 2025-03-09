@@ -8,7 +8,7 @@ const CardItem = ({hotel}) => {
   return (
     <div className="w-full border-1 border-gray-300 shadow-md rounded-sm px-6 py-6 flex flex-col md:flex-row gap-3">
       <div className="flex-2">
-        <img src={profileImg} alt="room" className="w-full h-full rounded-md" />
+        <img src={profileImg} alt={title} className="w-full h-full rounded-md" />
       </div>
 
       <div className="flex-4 flex justify-between">

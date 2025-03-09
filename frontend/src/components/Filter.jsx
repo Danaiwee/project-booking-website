@@ -71,10 +71,15 @@ const Filter = () => {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-
-    await setSearchDetails(searchData);
-    setShowCalendar(false);
-    navigate(`/search?city=${searchData.place}`);
+    try {
+      await setSearchDetails(searchData);
+      setShowCalendar(false);
+      navigate(`/search?city=${searchData.place}`);
+      
+    } catch (error) {
+      console.log("Error in filter: ", error);
+    }
+    
   };
 
   return (

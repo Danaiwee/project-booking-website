@@ -22,7 +22,7 @@ const SearchPage = () => {
   useEffect(() => {
     const fetchHotel = async (type, city) => {
       if(type){
-       await getHotelByType(type)
+       await getHotelByType(type);
       };
 
       if(city){
