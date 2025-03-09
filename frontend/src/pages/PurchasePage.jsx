@@ -84,8 +84,13 @@ const PurchasePage = () => {
   const handlePurchase = async (e) => {
     e.preventDefault();
 
-    await createPurchase(purchaseData);
-    navigate(`/purchase/success/${user._id}`);
+    try {
+      await createPurchase(purchaseData);
+      navigate(`/purchase/success/${user._id}`);
+    } catch (error) {
+      console.log("Error in PurchasePage: ", error);
+    }
+    
   };
 
   const roomPrice = Number(purchaseData.totalPrice);
