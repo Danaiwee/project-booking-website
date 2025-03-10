@@ -70,7 +70,7 @@ const SuccessPage = () => {
           </div>
           <Link to={`/bookings/${booking?.user}`}>
             <p className="text-xs text-emerald-500 underline font-medium">
-              See you booking detail
+              See your booking details
             </p>
           </Link>
 
