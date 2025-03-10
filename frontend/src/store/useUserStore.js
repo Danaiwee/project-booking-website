@@ -133,7 +133,7 @@ export const useUserStore = create((set, get) => ({
     },
 
     cancelBooking: async(bookingId) => {
-        set({isLoading: false});
+        set({isLoading: true});
         try {
             await axios.delete(`/booking/${bookingId}`);
             
@@ -160,6 +160,8 @@ export const useUserStore = create((set, get) => ({
         } catch (error) {
             console.log("Error in setBookingId useUserStore: ", error.message);
             throw new Error(error.message);
+        } finally {
+            set({isLoading: false})
         }
     }
 }));
