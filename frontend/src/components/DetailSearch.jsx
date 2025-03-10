@@ -4,6 +4,7 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { useState } from "react";
 import { DateRange } from "react-date-range";
 import { CalendarDays, User, Minus, Plus } from "lucide-react";
+import {motion} from 'framer-motion';
 
 import { useSearchStore } from "../store/useSearchStore.js";
 import { formatDateRange, generateDateArray} from "../utils/date.js";
@@ -194,13 +195,14 @@ const DetailsSearch = () => {
               </div>
             )}
           </div>
-            <button
+            <motion.button
               className="flex-1 h-12 bg-blue-900 rounded-md flex items-center justify-center text-white font-medium text-xl cursor-pointer px-8 py-2"
               type="button"
               onClick={handleFormSubmit}
+              whileTap={{scale: 0.95}}
             >
               Search
-            </button>
+            </motion.button>
         </form>
       </div>
     </section>
