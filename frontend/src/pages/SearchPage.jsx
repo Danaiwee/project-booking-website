@@ -43,6 +43,9 @@ const SearchPage = () => {
           } else if(searchDetails.minPrice) {
             return hotel.minPrice >= searchDetails.minPrice
 
+          } else if(searchDetails.maxPrice){
+            return hotel.minPrice <= searchDetails.maxPrice
+            
           } else {
             return hotel
           }
