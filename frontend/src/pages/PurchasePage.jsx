@@ -19,6 +19,7 @@ import {
   formatDateRange,
   generateDateArray,
   cancelDate,
+  generatePurchaseDateArray
 } from "../utils/date.js";
 import { useHotelStore } from "../store/useHotelStore";
 import { useSearchStore } from "../store/useSearchStore.js";
@@ -50,7 +51,7 @@ const PurchasePage = () => {
 
   useEffect(() => {
     if (searchDetails && hotel && room) {
-      const dateArray = generateDateArray(
+      const dateArray = generatePurchaseDateArray(
         searchDetails?.dates.startDate,
         searchDetails?.dates.endDate
       ).slice(0, -1);
@@ -99,7 +100,7 @@ const PurchasePage = () => {
     .toFixed(2)
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-  const dateArray = generateDateArray(
+  const dateArray = generatePurchaseDateArray(
     searchDetails?.dates?.startDate,
     searchDetails?.dates?.endDate
   );
@@ -108,6 +109,7 @@ const PurchasePage = () => {
   const cancelday = cancelDate(dateArray[0]);
 
   const guests = searchDetails?.adult + searchDetails?.children;
+
 
   return (
     <article className="w-full h-full bg-gray-100">

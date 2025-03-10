@@ -40,6 +40,22 @@ export const generateDateArray = (startDate, endDate) => {
   return dateArray;
 };
 
+export const generatePurchaseDateArray = (startDate, endDate) => {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+
+  const dateArray = [];
+  while (start <= end) {
+    // Format date with time (using 00:00:00 as an example)
+    dateArray.push(
+      `${start.getFullYear()}-${String(start.getMonth() + 1).padStart(2, "0")}-${String(start.getDate()).padStart(2, "0")}T${String(start.getHours()).padStart(2, "0")}:${String(start.getMinutes()).padStart(2, "0")}:${String(start.getSeconds()).padStart(2, "0")}`
+    );
+    start.setDate(start.getDate() + 1);
+  }
+
+  return dateArray;
+};
+
 //use in all search to fomat date in form eg. Mon, Mar 17, 2025
 export const formatDateRange = (date) => {
   const options = { weekday: "short", day: "numeric", month: "short", year: "numeric" };
