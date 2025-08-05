@@ -14,8 +14,10 @@ const router = express.Router();
 
 router.get("/", protectRoute, getAllRoom);
 router.get("/:id", protectRoute, getRoom);
+
 router.post("/create/:hotelId", protectRoute, checkAdmin, createRoom);
 router.post("/book/:id", protectRoute, bookDateRoom);
+
 router.put("/update/:id", protectRoute, checkAdmin, updateRoom);
 router.delete("/:id", protectRoute, checkAdmin, deleteRoom);
 
