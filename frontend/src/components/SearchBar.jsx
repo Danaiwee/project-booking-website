@@ -66,31 +66,31 @@ const SearchBar = () => {
   };
 
   return (
-    <section className="w-full max-w-7xl mx-auto relative -top-7 px-5">
+    <section className='w-full max-w-7xl mx-auto relative -top-7 px-5'>
       <div>
-        <form className="flex flex-col lg:flex-row item-center bg-amber-500 rounded-md p-1 gap-1">
-          <div className="flex-2 flex items-center rounded-md px-2 py-2 bg-white">
+        <form className='flex flex-col lg:flex-row item-center bg-amber-500 rounded-md p-1 gap-1'>
+          <div className='flex-2 flex items-center rounded-md px-2 py-2 bg-white'>
             <label>
-              <BedSingle className="text-gray-400 size-8" />
+              <BedSingle className='text-gray-400 size-8' />
             </label>
             <input
-              type="text"
-              id="place"
-              name="place"
-              placeholder="Where are you going?"
-              className="w-full outline-none px-2 text-gray-500"
+              type='text'
+              id='place'
+              name='place'
+              placeholder='Where are you going?'
+              className='w-full outline-none px-2 text-gray-500'
               value={searchData.place}
               onChange={handleDataChange}
               required
             />
           </div>
 
-          <div className="relative flex-2 flex items-center rounded-md px-2 py-2 bg-white">
+          <div className='relative flex-2 flex items-center rounded-md px-2 py-2 bg-white'>
             <label>
-              <CalendarDays className="text-gray-400 size-8" />
+              <CalendarDays className='text-gray-400 size-8' />
             </label>
             <div
-              className="w-full text-gray-400 cursor-pointer px-2 text-sm"
+              className='w-full text-gray-400 cursor-pointer px-2 text-sm'
               onClick={() => setShowCalendar(!showCalendar)}
             >
               <p>
@@ -99,7 +99,7 @@ const SearchBar = () => {
             </div>
 
             {showCalendar && (
-              <div className="absolute top-38 left-10 lg:top-13 lg:left-5 border-2 border-gray-200 w-fit z-50">
+              <div className='absolute top-38 left-10 lg:top-13 lg:left-5 border-2 border-gray-200 w-fit z-50'>
                 <DateRange
                   editableDateInputs={true}
                   onChange={handleDateChange} // Use the handleDateChange function
@@ -110,12 +110,12 @@ const SearchBar = () => {
             )}
           </div>
 
-          <div className="relative flex-2 flex items-center rounded-md px-2 py-2 bg-white">
+          <div className='relative flex-2 flex items-center rounded-md px-2 py-2 bg-white'>
             <label>
-              <User className="text-gray-400 size-8" />
+              <User className='text-gray-400 size-8' />
             </label>
             <div
-              className="w-full text-gray-400 cursor-pointer px-2 text-sm"
+              className='w-full text-gray-400 cursor-pointer px-2 text-sm'
               onClick={() => setPersonInput(!personInput)}
             >
               <p>
@@ -124,13 +124,13 @@ const SearchBar = () => {
               </p>
             </div>
             {personInput && (
-              <div className="absolute top-25 lg:top-13 lg:left-5 w-[320px] flex flex-col  border-2 border-gray-200 px-10 py-6 rounded-md gap-3 shadow-lg z-50 bg-gray-100">
-                <div className="flex items-center justify-between">
+              <div className='absolute top-25 lg:top-13 lg:left-5 w-[320px] flex flex-col  border-2 border-gray-200 px-10 py-6 rounded-md gap-3 shadow-lg z-50 bg-gray-100'>
+                <div className='flex items-center justify-between'>
                   <p>Adults</p>
-                  <div className="flex items-center border-1 border-gray-500 rounded-md gap-3 p-2">
+                  <div className='flex items-center border-1 border-gray-500 rounded-md gap-3 p-2'>
                     <button
-                      className="hover:bg-blue-100 cursor-pointer rounded-md"
-                      type="button"
+                      className='hover:bg-blue-100 cursor-pointer rounded-md'
+                      type='button'
                       onClick={() =>
                         setSearchData((prev) => ({
                           ...prev,
@@ -141,10 +141,10 @@ const SearchBar = () => {
                     >
                       <Minus />
                     </button>
-                    <p className="w-3">{searchData.adult}</p>
+                    <p className='w-3'>{searchData.adult}</p>
                     <button
-                      className="hover:bg-blue-100 cursor-pointer rounded-md"
-                      type="button"
+                      className='hover:bg-blue-100 cursor-pointer rounded-md'
+                      type='button'
                       onClick={() =>
                         setSearchData((prev) => ({
                           ...prev,
@@ -157,12 +157,12 @@ const SearchBar = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between">
+                <div className='flex items-center justify-between'>
                   <p>Childrens</p>
-                  <div className="flex items-center border-1 border-gray-500 rounded-md gap-3 p-2">
+                  <div className='flex items-center border-1 border-gray-500 rounded-md gap-3 p-2'>
                     <button
-                      className="hover:bg-blue-100 cursor-pointer rounded-md"
-                      type="button"
+                      className='hover:bg-blue-100 cursor-pointer rounded-md'
+                      type='button'
                       onClick={() =>
                         setSearchData((prev) => ({
                           ...prev,
@@ -173,10 +173,10 @@ const SearchBar = () => {
                     >
                       <Minus />
                     </button>
-                    <p className="w-3">{searchData.children}</p>
+                    <p className='w-3'>{searchData.children}</p>
                     <button
-                      className="hover:bg-blue-100 cursor-pointer rounded-md"
-                      type="button"
+                      className='hover:bg-blue-100 cursor-pointer rounded-md'
+                      type='button'
                       onClick={() =>
                         setSearchData((prev) => ({
                           ...prev,
@@ -189,12 +189,12 @@ const SearchBar = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between">
+                <div className='flex items-center justify-between'>
                   <p>Room</p>
-                  <div className="flex items-center border-1 border-gray-500 rounded-md gap-3 p-2">
+                  <div className='flex items-center border-1 border-gray-500 rounded-md gap-3 p-2'>
                     <button
-                      className="hover:bg-blue-100 cursor-pointer rounded-md"
-                      type="button"
+                      className='hover:bg-blue-100 cursor-pointer rounded-md'
+                      type='button'
                       onClick={() =>
                         setSearchData((prev) => ({
                           ...prev,
@@ -205,10 +205,10 @@ const SearchBar = () => {
                     >
                       <Minus />
                     </button>
-                    <p className="w-3">{searchData.room}</p>
+                    <p className='w-3'>{searchData.room}</p>
                     <button
-                      className="hover:bg-blue-100 cursor-pointer rounded-md"
-                      type="button"
+                      className='hover:bg-blue-100 cursor-pointer rounded-md'
+                      type='button'
                       onClick={() =>
                         setSearchData((prev) => ({
                           ...prev,
@@ -222,7 +222,7 @@ const SearchBar = () => {
                 </div>
 
                 <button
-                  className="w-full py-2 rounded-md flex items-center justify-center bg-blue-900 hover:shadow-lg cursor-pointer text-white"
+                  className='w-full py-2 rounded-md flex items-center justify-center bg-blue-900 hover:shadow-lg cursor-pointer text-white'
                   onClick={() => setPersonInput(false)}
                 >
                   Done
@@ -231,8 +231,8 @@ const SearchBar = () => {
             )}
           </div>
           <button
-            className="flex-1 h-12 bg-blue-900 rounded-md flex items-center justify-center text-white font-medium text-xl cursor-pointer px-8 py-2"
-            type="button"
+            className='flex-1 h-12 bg-blue-900 rounded-md flex items-center justify-center text-white font-medium text-xl cursor-pointer px-8 py-2'
+            type='button'
             onClick={handleFormSubmit}
           >
             Search

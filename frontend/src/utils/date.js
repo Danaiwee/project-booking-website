@@ -40,6 +40,7 @@ export const generateDateArray = (startDate, endDate) => {
   return dateArray;
 };
 
+//generate date array using startDate and endDate eg.output = ["2025-08-01T00:00:00","2025-08-02T00:00:00","2025-08-03T00:00:00"]
 export const generatePurchaseDateArray = (startDate, endDate) => {
   const start = new Date(startDate);
   const end = new Date(endDate);

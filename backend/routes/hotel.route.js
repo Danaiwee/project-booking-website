@@ -19,8 +19,8 @@ const router = express.Router();
 
 router.get("/getAll", getAllHotels);
 router.get("/count", getCountByType);
-router.get("/:id", getHotel);
 router.get("/featured", getFeaturedHotels);
+router.get("/:id", getHotel);
 router.get("/city/:city", getHotelByCity);
 router.get("/type/:type", getHotelByType);
 router.get("/rooms/:id", getHotelRooms);
