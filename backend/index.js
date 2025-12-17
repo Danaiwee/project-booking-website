@@ -28,7 +28,16 @@ app.use("/api/hotels", hotelRoutes);
 app.use("/api/rooms", roomRoutes);
 app.use("/api/booking", bookingRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-  connectDB();
-});
+const startServer = async () => {
+  try {
+    await connectDB();
+    app.listen(PORT, () => {
+      console.log(`✅ Server is running on PORT ${PORT}`);
+    });
+  } catch (err) {
+    console.log("❌ Failed to start server", err);
+    process.exit(1);
+  }
+};
+
+startServer();
