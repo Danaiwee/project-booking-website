@@ -2,6 +2,7 @@ import Booking from "../models/booking.model.js";
 import Room from "../models/room.model.js";
 import User from "../models/user.model.js";
 
+
 export const createBooking = async (req, res) => {
   try {
     const {

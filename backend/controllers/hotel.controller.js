@@ -172,10 +172,11 @@ export const createHotel = async (req, res) => {
 export const updateHotel = async (req, res) => {
   try {
     const hotelId = req.params.id;
+    const data = req.body;
 
     const updatedHotel = await Hotel.findByIdAndUpdate(
       hotelId,
-      { $set: req.body },
+      { $set: data },
       { new: true }
     );
 

@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import no_result_img from "../assets/no-results.png";
 import { DESTINATIONS1, DESTINATIONS2 } from "../constants";
@@ -14,8 +14,6 @@ import Subscribe from "../components/Subscribe";
 import PropertyTypes from "../components/PropertyTypes.jsx";
 
 const HomePage = () => {
-  const [type, setType] = useState(null);
-  const [features, setFeatures] = useState(null);
   const { getType, hotelType, hotels, getFeatured, isLoading } =
     useHotelStore();
 
@@ -23,11 +21,6 @@ const HomePage = () => {
     getType();
     getFeatured();
   }, [getType, getFeatured]);
-
-  useEffect(() => {
-    setType(hotelType);
-    setFeatures(hotels);
-  }, [hotelType, hotels]);
 
   if (isLoading) {
     return <div className='skeleton h-screen w-full' />;
@@ -48,7 +41,7 @@ const HomePage = () => {
           <h1 className='text-gray-900 text-xl md:text-2xl font-bold'>
             Browse by property type
           </h1>
-          {!type && (
+          {!hotelType && (
             <div className='w-full h-60 flex flex-col items-center justify-center'>
               <img src={no_result_img} alt='no_results' className='size-25' />
               <p className='text-xl text-gray-500 font-medium'>
@@ -57,9 +50,9 @@ const HomePage = () => {
             </div>
           )}
 
-          {type && (
+          {hotelType && (
             <div className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3 mt-3'>
-              {<PropertyTypes type={type} />}
+              {<PropertyTypes type={hotelType} />}
             </div>
           )}
         </div>
@@ -69,7 +62,7 @@ const HomePage = () => {
             Property you might like
           </h1>
 
-          {!features && (
+          {!hotels && (
             <div className='w-full h-80 flex flex-col items-center justify-center'>
               <img src={no_result_img} alt='no_results' className='size-25' />
               <p className='text-xl text-gray-500 font-medium'>
@@ -78,9 +71,9 @@ const HomePage = () => {
             </div>
           )}
 
-          {features && (
+          {hotels && (
             <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mt-3'>
-              {features.map((hotel) => (
+              {hotels.map((hotel) => (
                 <Features key={hotel._id} hotel={hotel} />
               ))}
             </div>

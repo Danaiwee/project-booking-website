@@ -7,7 +7,7 @@ import { BedSingle, CalendarDays, User, Minus, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import { useSearchStore } from "../store/useSearchStore.js";
-import { useHotelStore } from "../store/useHotelStore.js";
+// import { useHotelStore } from "../store/useHotelStore.js";
 import { formatDateRange, generateDateArray } from "../utils/date.js";
 
 const SearchBar = () => {
@@ -30,7 +30,7 @@ const SearchBar = () => {
   const navigate = useNavigate();
 
   const { setSearchDetails } = useSearchStore();
-  const { getHotelByCity } = useHotelStore();
+  // const { getHotelByCity } = useHotelStore();
 
   const dateArray = generateDateArray(
     searchData?.dates?.startDate,
@@ -57,7 +57,7 @@ const SearchBar = () => {
     e.preventDefault();
     try {
       await setSearchDetails(searchData);
-      await getHotelByCity(searchData.place);
+      // await getHotelByCity(searchData.place);
 
       navigate(`/search?city=${searchData?.place}`);
     } catch (error) {

@@ -30,9 +30,9 @@ const Features = ({hotel}) => {
             className="w-full h-60"
           />
         </figure>
-        <div className="card-body gap-0 flex flex-col items-start">
+        <div className="card-body gap-0 flex flex-col items-start justify-start">
           <p className="text-xs text-gray-500">{type}</p>
-          <h2 className="card-title h-15">
+          <h2 className="card-title h-15 text-start">
             {title}
           </h2>
 

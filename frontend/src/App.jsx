@@ -12,17 +12,26 @@ import SearchPage from "./pages/SearchPage";
 import PurchasePage from "./pages/PurchasePage";
 import SuccessPage from "./pages/SuccessPage";
 import BookingPage from "./pages/BookingPage";
+import { Loader2 } from "lucide-react";
 
 const App = () => {
   const location = useLocation();
   const isAuthPage =
     location.pathname === "/login" || location.pathname === "/signup";
 
-  const { checkAuth, user } = useUserStore();
+  const { checkAuth, user, isCheckingAuth } = useUserStore();
 
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
+
+  if (isCheckingAuth) {
+    return (
+      <div className='w-full h-screen flex items-center justify-center'>
+        <Loader2 className='animate-spin' size='lg' />
+      </div>
+    );
+  }
 
   return (
     <div className='w-full h-full'>

@@ -31,28 +31,28 @@ const RoomTypes = ({ room }) => {
     if (searchDetails) {
       const startDate = searchDetails.dates.startDate;
       const endDate = searchDetails.dates.endDate;
-      const guestDateRange = generateDateArray(startDate, endDate); // Generate date array between startDate and endDate (in YYYY-MM-DD format)
+      const guestDateRange = generateDateArray(startDate, endDate); // Generate date array between startDate and endDate (in YYYY-MM-DD format) [2025-02-13, 2025-02-14]
       const normalizedRoomBooking = room?.dateBooking.map(
         (date) => new Date(date).toISOString().split("T")[0]
-      ); // Normalize the room's dateBooking to the same format (YYYY-MM-DD)
+      ); // Normalize the room's dateBooking to the same format (YYYY-MM-DD) [2025-02-13, 2025-02-14]
 
-      const totalRoom = room?.totalRoom; // how many room in hotel
       const bookRoom = searchDetails?.room; //how many room guest needed
+      const totalRoom = room?.totalRoom; // how many room in hotel
 
-      const databaseDateObj = generateObj(normalizedRoomBooking);
-      const guestDateObj = generateObj(guestDateRange);
+      const guestDateObj = generateObj(guestDateRange); //eg. {2025-06-06: 1, 2025-06-07: 1}
+      const databaseDateObj = generateObj(normalizedRoomBooking); //eg. {2025-05-06: 1, 2025-05-07: 2}
 
       const checkAvailability = () => {
         // Check if any of the generated dates match the normalized dateBooking array and also compare with max room
         for (let date of guestDateRange) {
-          const bookedRoom = databaseDateObj[date] + bookRoom || bookRoom;
+          const bookedRoom = databaseDateObj[date] + bookRoom || bookRoom; // 2
           if (bookedRoom > totalRoom) {
             return false;
           }
         }
 
         //check if guests are more than maxPeople
-        const totalGuests = searchDetails?.adult + searchDetails?.children;
+        const totalGuests = searchDetails?.adult + searchDetails?.children; //3
         const maxPeoeple = room?.maxPeople;
         if (totalGuests > maxPeoeple) {
           return false;

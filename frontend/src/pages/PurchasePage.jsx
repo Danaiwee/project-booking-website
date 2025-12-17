@@ -28,8 +28,7 @@ import { usePurchaseStore } from "../store/usePurchaseStore.js";
 import { generateNewDateArr } from "../utils/generateArray.js";
 
 const PurchasePage = () => {
-  const { breakfast } = useHotelStore();
-  const { hotel, room } = useHotelStore();
+  const { breakfast, hotel, room } = useHotelStore();
   const { searchDetails } = useSearchStore();
   const { user } = useUserStore();
   const { createPurchase } = usePurchaseStore();
@@ -54,8 +53,8 @@ const PurchasePage = () => {
       const dateArray = generatePurchaseDateArray(
         searchDetails?.dates.startDate,
         searchDetails?.dates.endDate
-      ).slice(0, -1);
-      const newDateArray = generateNewDateArr(dateArray, searchDetails.room);
+      ).slice(0, -1); //generate booking date [2025-02-12, 2025-02-13]
+      const newDateArray = generateNewDateArr(dateArray, searchDetails.room); //if booking 2 rooms [2025-02-12, 2025-02-13, 2025-02-12, 2025-02-13]
 
       const totalPrice = breakfast
         ? (Number(room?.price ?? 0) + Number(room?.breakfast ?? 0)) *
@@ -100,13 +99,14 @@ const PurchasePage = () => {
   const taxes = (roomPrice * 0.07).toFixed(2);
   const totalPrice = (roomPrice + Number(taxes))
     .toFixed(2)
-    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ","); //Add thousads separater
 
   const dateArray = generatePurchaseDateArray(
     searchDetails?.dates?.startDate,
     searchDetails?.dates?.endDate
-  );
-  const startDate = formatDateRange(dateArray[0]);
+  );//generate booking date [2025-02-12, 2025-02-13]
+
+  const startDate = formatDateRange(dateArray[0]); //eg. Mon, Mar 17, 2025
   const endDate = formatDateRange(dateArray[dateArray.length - 1]);
   const cancelday = cancelDate(dateArray[0]);
 

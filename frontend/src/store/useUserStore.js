@@ -3,7 +3,7 @@ import axios from "../libs/axios.js";
 import toast from "react-hot-toast";
 
 export const useUserStore = create((set) => ({
-  user: JSON.parse(localStorage.getItem("user")) || null,
+  user: null,
   isLoading: false,
   isCheckingAuth: false,
   booking: JSON.parse(localStorage.getItem("user-booking")) || null,
@@ -15,15 +15,11 @@ export const useUserStore = create((set) => ({
     try {
       if (!name || !email || !username || !password || !confirmPassword) {
         toast.error("All fields are required");
-        set({ isLoading: false });
-
         return;
       }
 
       if (password !== confirmPassword) {
         toast.error("Passwords must be matched");
-        set({ isLoading: false });
-
         return;
       }
 
@@ -36,12 +32,23 @@ export const useUserStore = create((set) => ({
       });
       const data = await res.data;
 
+      console.log(data.error);
+      if (data.error) {
+        toast.error(`${data.error}`);
+        return;
+      }
+
       set({ user: data });
-      localStorage.setItem("user", JSON.stringify(data));
       toast.success(`Welcome ${data.name}`);
     } catch (error) {
       console.log("Error in signup useUserStore: ", error.message);
-      throw new Error(error.message);
+      const backendError = error.response?.data?.error;
+
+      if (backendError) {
+        toast.error(backendError);
+      } else {
+        toast.error("Something went wrong");
+      }
     } finally {
       set({ isLoading: false });
     }
@@ -59,11 +66,16 @@ export const useUserStore = create((set) => ({
       const data = await res.data;
 
       set({ user: data });
-      localStorage.setItem("user", JSON.stringify(data));
       toast.success(`Welcome ${data.name}`);
     } catch (error) {
       console.log("Error in login useUserStore: ", error.message);
-      throw new Error(error.message);
+      const backendError = error.response?.data?.error;
+
+      if (backendError) {
+        toast.error(backendError);
+      } else {
+        toast.error("Something went wrong");
+      }
     } finally {
       set({ isLoading: false });
     }
@@ -72,7 +84,6 @@ export const useUserStore = create((set) => ({
   logout: async () => {
     set({ isLoading: false });
     try {
-      localStorage.removeItem("user");
       localStorage.removeItem("user-booking");
       localStorage.removeItem("user-bookings");
 
@@ -92,8 +103,7 @@ export const useUserStore = create((set) => ({
     set({ isChekingAuth: true });
     try {
       const res = await axios.get("/auth/getme");
-      set({ user: res.data, isCheckingAuth: false });
-      localStorage.setItem("user", JSON.stringify(res.data));
+      set({ user: res.data });
     } catch (error) {
       console.log("Error in checkAuth: ", error.message);
       throw new Error(error.message);

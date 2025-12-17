@@ -1,6 +1,11 @@
-import express from 'express';
-import { protectRoute } from '../middleware/protectRoute.js';
-import { createBooking, deleteBooking, getBooking, getBookings } from '../controllers/booking.controller.js';
+import express from "express";
+import { protectRoute } from "../middleware/protectRoute.js";
+import {
+  createBooking,
+  deleteBooking,
+  getBooking,
+  getBookings,
+} from "../controllers/booking.controller.js";
 
 const router = express.Router();
 

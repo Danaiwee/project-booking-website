@@ -119,7 +119,8 @@ const DetailsPage = () => {
           </div>
         </div>
       </div>
-
+      
+      {/*Moeal for room type*/}
       <dialog id='my_modal_3' className='modal'>
         <div className='modal-box w-full max-w-7xl'>
           <form method='dialog'>

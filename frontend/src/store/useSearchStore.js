@@ -10,31 +10,29 @@ const defaultSearchDetails = {
   adult: 2,
   children: 0,
   room: 1,
-  minPrice: '',
-  maxPrice: '',
+  minPrice: "",
+  maxPrice: "",
 };
 
-export const useSearchStore = create((set, get) => ({
+export const useSearchStore = create((set) => ({
   searchDetails: (() => {
-    const savedSearchDetails = localStorage.getItem("searchDetails-1");
-    if (!savedSearchDetails) return null;
+    const savedSearchDetails =
+      localStorage.getItem("searchDetails-1") || defaultSearchDetails;
 
-    const parsedDetails = JSON.parse(savedSearchDetails);
-    
+    const parsedDetails = JSON.parse(JSON.stringify(savedSearchDetails));
+
     // Convert date strings back to Date objects
     return {
       ...parsedDetails,
       dates: {
         ...parsedDetails.dates,
-        startDate: new Date(parsedDetails.dates.startDate),
-        endDate: new Date(parsedDetails.dates.endDate),
+        startDate: new Date(parsedDetails.dates?.startDate),
+        endDate: new Date(parsedDetails.dates?.endDate),
       },
     };
   })(),
-  
-  isLoading: false,
 
-  getSearchDetails: () => get().searchDetails,
+  isLoading: false,
 
   setSearchDetails: (searchDetails = defaultSearchDetails) => {
     // Ensure startDate and endDate are Date objects
@@ -48,6 +46,9 @@ export const useSearchStore = create((set, get) => ({
     };
 
     set({ searchDetails: formattedSearchDetails });
-    localStorage.setItem("searchDetails-1", JSON.stringify(formattedSearchDetails));
+    localStorage.setItem(
+      "searchDetails-1",
+      JSON.stringify(formattedSearchDetails)
+    );
   },
 }));

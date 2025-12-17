@@ -18,7 +18,7 @@ const SearchPage = () => {
   const { getHotelByCity, getHotelByType, hotels, isLoading } = useHotelStore();
   const { searchDetails } = useSearchStore();
 
-  const [filteredHotel, setFilteredHotel] = useState(null);
+  const [filteredHotels, setFilteredHotels] = useState(null);
 
   useEffect(() => {
     const fetchHotel = async (type, city) => {
@@ -54,11 +54,11 @@ const SearchPage = () => {
       };
 
       const filtered = filterData();
-      setFilteredHotel(filtered);
+      setFilteredHotels(filtered);
     } else {
-      setFilteredHotel(hotels);
+      setFilteredHotels(hotels);
     }
-  }, [hotels, searchDetails]); // This will update filteredHotel whenever hotels change
+  }, [hotels, searchDetails]); // This will update filteredHotels whenever hotels change
 
   return (
     <section className='w-full h-full mt-5'>
@@ -78,12 +78,12 @@ const SearchPage = () => {
           animate={{ x: 0 }}
           transition={{ duration: 0.8 }}
         >
-          {filteredHotel &&
-            filteredHotel.map((hotel) => (
+          {filteredHotels &&
+            filteredHotels.map((hotel) => (
               <CardItem key={hotel._id} hotel={hotel} />
             ))}
 
-          {!isLoading && filteredHotel?.length === 0 && (
+          {!isLoading && filteredHotels?.length === 0 && (
             <div className='w-full h-full flex flex-col justify-center items-center mt-20'>
               <img src={hotelImg} alt='hotel icon' className='w-70' />
               <h1 className='text-2xl text-gray-600 font-medium mt-10'>

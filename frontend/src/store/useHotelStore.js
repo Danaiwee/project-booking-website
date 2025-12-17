@@ -91,7 +91,7 @@ export const useHotelStore = create((set) => ({
       const res = await axios.get(`/hotels/rooms/${hotelId}`);
       const data = await res.data;
 
-      set({ hotel: data });
+      set({ hotel: data }); 
       localStorage.setItem("hotel", JSON.stringify(data));
     } catch (error) {
       console.log("Error in getHotelRoom useHotelStore: ", error.message);
@@ -106,7 +106,7 @@ export const useHotelStore = create((set) => ({
       set({ breakfast: type });
       localStorage.setItem("breakfast", JSON.stringify(type));
     } catch (error) {
-      console.log("Erro in setBookingType: ", error.message);
+      console.log("Error in setBookingType: ", error.message);
       throw new Error(error.message);
     }
   },

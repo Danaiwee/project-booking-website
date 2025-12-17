@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 import { ArrowRight, CheckCircle } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Confetti from "react-confetti";

@@ -1,40 +1,50 @@
 import Room from "../models/room.model.js";
 import Hotel from "../models/hotel.model.js";
 
-export const getAllRoom = async(req, res) => {
-    try {
-        const rooms = await Room.find();
-        if(!rooms){
-            return res.status(404).json({error: "Room not found"});
-        };
-
-        return res.status(200).json(rooms)
-    } catch (error) {
-        console.log("Error in getAllRooms controller", getAllRoom);
-        return res.status(500).json({error: "Internal server error"});
+export const getAllRoom = async (req, res) => {
+  try {
+    const rooms = await Room.find();
+    if (!rooms) {
+      return res.status(404).json({ error: "Room not found" });
     }
-}
 
-export const getRoom = async(req, res) => {
-    try {
-        const roomId = req.params.id;
+    return res.status(200).json(rooms);
+  } catch (error) {
+    console.log("Error in getAllRooms controller", getAllRoom);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
 
-        const room = await Room.findById(roomId);
-        if(!room){
-            return res.status(404).json({error: "Room not found"})
-        };
+export const getRoom = async (req, res) => {
+  try {
+    const roomId = req.params.id;
 
-        return res.status(200).json(room);
-    } catch (error) {
-        console.log("Error in getRoom controller: ", error.message);
-        return res.status(500).json({error: "Internal server error"});
+    const room = await Room.findById(roomId);
+    if (!room) {
+      return res.status(404).json({ error: "Room not found" });
     }
+
+    return res.status(200).json(room);
+  } catch (error) {
+    console.log("Error in getRoom controller: ", error.message);
+    return res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 export const createRoom = async (req, res) => {
   try {
     const hotelId = req.params.hotelId;
-    const { title, price, area, bedType, bedAmount, maxPeople, images, breakfast, totalRoom } = req.body;
+    const {
+      title,
+      price,
+      area,
+      bedType,
+      bedAmount,
+      maxPeople,
+      images,
+      breakfast,
+      totalRoom,
+    } = req.body;
 
     const newRoom = new Room({
       title,
@@ -46,7 +56,7 @@ export const createRoom = async (req, res) => {
       hotel: hotelId,
       images,
       breakfast,
-      totalRoom
+      totalRoom,
     });
 
     await newRoom.save();
@@ -66,10 +76,11 @@ export const createRoom = async (req, res) => {
 export const updateRoom = async (req, res) => {
   try {
     const roomId = req.params.id;
+    const data = req.body;
 
     const updatedRoom = await Room.findByIdAndUpdate(
       roomId,
-      { $set: req.body },
+      { $set: data },
       { new: true }
     );
 
@@ -87,11 +98,12 @@ export const updateRoom = async (req, res) => {
 export const bookDateRoom = async (req, res) => {
   try {
     const roomId = req.params.id;
+    const { dates } = req.body;
     const updatedRoom = await Room.findByIdAndUpdate(
       roomId,
       {
         $push: {
-          dateBooking: req.body.dates,
+          dateBooking: dates,
         },
       },
       { new: true }
